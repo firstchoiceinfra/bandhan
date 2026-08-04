@@ -1,126 +1,63 @@
-import streamlit as st
-import time
 import pandas as pd
 
-# 1. Page Configuration
-st.set_page_config(
-    page_title="AI Matchmaking | Bandhan",
-    page_icon="🧬",
-    layout="wide"
-)
+# --- THE AI MATCHMAKING ENGINE ---
 
-# 2. Premium Custom CSS
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: #FAFAFA;
-    }
-    .header-text {
-        color: #0F2027;
-        font-family: 'Helvetica Neue', sans-serif;
-        font-weight: 800;
-        font-size: 2.2rem;
-    }
-    .gold-text {
-        color: #D4AF37;
-    }
+def calculate_compatibility_score(user_profile, potential_matches_list):
+    """
+    Analyzes multiple data points to generate an AI Match Score.
+    """
+    match_results = []
     
-    /* Profile Card Styling */
-    .profile-card {
-        background-color: white;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        border-top: 3px solid #1A365D;
-        margin-bottom: 20px;
-    }
-    .match-score {
-        color: #27AE60;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-    .profile-name {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #1A365D;
-        margin-bottom: 5px;
-    }
-    .profile-details {
-        color: #666666;
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# 3. Page Header
-st.markdown("<h1 class='header-text'>Bandhan <span class='gold-text'>AI Matchmaking</span> 🧬</h1>", unsafe_allow_html=True)
-st.markdown("Our proprietary AI algorithm analyzes 50+ data points to find your perfect match.")
-st.markdown("---")
-
-# 4. Sidebar for Manual Filters
-st.sidebar.header("🎯 Refine Search")
-age_filter = st.sidebar.slider("Age Range", 21, 60, (24, 32))
-religion_filter = st.sidebar.multiselect("Religion", ["Hindu", "Muslim", "Sikh", "Christian", "Jain"], default=["Hindu"])
-income_filter = st.sidebar.selectbox("Minimum Income", ["Any", "$50k+", "$100k+", "$200k+"])
-st.sidebar.button("Apply Filters", type="primary", use_container_width=True)
-
-# 5. The AI Matching Simulation
-if 'ai_run' not in st.session_state:
-    st.session_state.ai_run = False
-
-col1, col2 = st.columns([1, 4])
-with col1:
-    run_ai = st.button("🚀 Run AI Smart Search", type="primary", use_container_width=True)
-
-if run_ai:
-    with st.spinner('AI is analyzing behavioral traits and preferences...'):
-        time.sleep(1.5) # Simulate AI processing time
-        st.session_state.ai_run = True
-
-# 6. Displaying Matches
-if st.session_state.ai_run:
-    st.success("✅ AI Analysis Complete. Here are your top highly-compatible matches.")
-    
-    # Mock Data for Profiles
-    profiles = [
-        {
-            "name": "Priya Sharma", "age": 27, "profession": "Software Engineer", 
-            "location": "Mumbai, India", "match": "98%", "img": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80"
-        },
-        {
-            "name": "Aisha Khan", "age": 26, "profession": "Architect", 
-            "location": "Dubai, UAE", "match": "94%", "img": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80"
-        },
-        {
-            "name": "Neha Patel", "age": 28, "profession": "Investment Banker", 
-            "location": "London, UK", "match": "91%", "img": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
-        }
-    ]
-    
-    # Create rows of profiles
-    p_col1, p_col2, p_col3 = st.columns(3)
-    cols = [p_col1, p_col2, p_col3]
-    
-    for i, profile in enumerate(profiles):
-        with cols[i]:
-            st.image(profile["img"], use_container_width=True)
-            st.markdown(f"""
-                <div class="profile-card">
-                    <div class="match-score">⭐ {profile['match']} AI Match</div>
-                    <div class="profile-name">{profile['name']}, {profile['age']}</div>
-                    <div class="profile-details">
-                        💼 {profile['profession']}<br>
-                        📍 {profile['location']}
-                    </div>
-                </div>
-            """, unsafe_allow_html=True)
+    for match in potential_matches_list:
+        score = 0
+        
+        # 1. Religion & Core Values (High Priority: 40 Points)
+        if user_profile['religion'] == match['religion']:
+            score += 40
             
-            # Action Buttons
-            btn_col1, btn_col2 = st.columns(2)
-            with btn_col1:
-                st.button("Send Request", key=f"req_{i}", type="primary", use_container_width=True)
-            with btn_col2:
-                st.button("View Profile", key=f"view_{i}", use_container_width=True)
-else:
-    st.info("👈 Click on 'Run AI Smart Search' to let our algorithm find your perfect matches, or use the sidebar filters for manual searching.")
+        # 2. Age Compatibility (Medium Priority: 30 Points)
+        # Assuming the ideal age gap is between 0 to 4 years
+        age_diff = abs(user_profile['age'] - match['age'])
+        if age_diff <= 3:
+            score += 30
+        elif age_diff <= 5:
+            score += 15
+            
+        # 3. Location / City Preference (20 Points)
+        if user_profile['preferred_location'] == match['location']:
+            score += 20
+            
+        # 4. Ecosystem & Lifestyle Match (10 Points)
+        # Matching lifestyle choices like premium vs standard
+        if user_profile['lifestyle_budget'] == match['lifestyle_budget']:
+            score += 10
+            
+        match_results.append({
+            "name": match['name'],
+            "age": match['age'],
+            "profession": match['profession'],
+            "match_percentage": score,
+            "image_url": match['image_url']
+        })
+        
+    # Sort the results so the highest percentage match appears first
+    sorted_matches = sorted(match_results, key=lambda x: x['match_percentage'], reverse=True)
+    return sorted_matches
+
+# --- EXAMPLE USAGE IN STREAMLIT ---
+# (This runs when user clicks 'Run AI Smart Search')
+
+user_data = {
+    "age": 28, "religion": "Hindu", 
+    "preferred_location": "Mumbai", "lifestyle_budget": "Premium"
+}
+
+mock_database_profiles = [
+    {"name": "Priya", "age": 27, "religion": "Hindu", "location": "Mumbai", "lifestyle_budget": "Premium", "profession": "Doctor", "image_url": "..."},
+    {"name": "Neha", "age": 25, "religion": "Hindu", "location": "Pune", "lifestyle_budget": "Standard", "profession": "Engineer", "image_url": "..."}
+]
+
+# Run the Engine
+top_matches = calculate_compatibility_score(user_data, mock_database_profiles)
+
+# Now loop through 'top_matches' and display them in your Streamlit Profile Cards!
