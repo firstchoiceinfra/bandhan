@@ -50,23 +50,45 @@ st.markdown("""
         filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.5));
     }
 
-    /* Broad & Bold Form Labels Styling */
-    .custom-label {
-        font-size: 1.3rem;
-        font-weight: 800;
-        color: #1A365D;
-        margin-bottom: 5px;
-        display: block;
-        font-family: 'Helvetica Neue', sans-serif;
-    }
-
-    /* EMI Calculator Card Background */
+    /* Main Calculator Container Background */
     .calc-container {
         background: white;
-        padding: 30px;
+        padding: 35px;
         border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         border: 1px solid #EAEAEA;
+    }
+
+    /* Section Headings with Background Cards */
+    .section-box-header {
+        background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
+        color: #FBF5B7;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        border-left: 5px solid #D4AF37;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Premium Value Highlight Boxes (For Loan Amount, Tenure, & Interest Rate) */
+    .premium-value-box {
+        background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+        border: 2px solid #CBD5E1;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: #D97706; /* Rich Premium Amber/Gold tone */
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        margin-top: 10px;
+        margin-bottom: 25px;
+        letter-spacing: 0.5px;
     }
 
     /* Estimated Monthly EMI Premium Box */
@@ -88,24 +110,32 @@ st.markdown("""
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
 
-    /* Cinematic Compact Button Customization */
+    /* Animated & Cinematic Compact Button */
     .stButton > button {
         background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%) !important;
         color: white !important;
-        font-size: 1.1rem !important;
+        font-size: 1.15rem !important;
         font-weight: 800 !important;
-        padding: 10px 25px !important;
+        padding: 12px 30px !important;
         border-radius: 50px !important;
         border: none !important;
-        box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4) !important;
-        transition: all 0.3s ease !important;
+        box-shadow: 0 10px 25px rgba(255, 65, 108, 0.45) !important;
+        transition: all 0.4s ease !important;
         display: block !important;
         margin: 0 auto !important;
+        animation: pulse-animation 2s infinite;
+    }
+    
+    @keyframes pulse-animation {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 65, 108, 0.5); }
+        70% { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(255, 65, 108, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 65, 108, 0); }
     }
     
     .stButton > button:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 12px 25px rgba(255, 65, 108, 0.6) !important;
+        transform: translateY(-4px) scale(1.04);
+        background: linear-gradient(135deg, #FF4B2B 0%, #FF416C 100%) !important;
+        box-shadow: 0 15px 30px rgba(255, 65, 108, 0.7) !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -127,21 +157,25 @@ col1, col2 = st.columns([1.2, 1], gap="large")
 
 with col1:
     st.markdown("<div class='calc-container'>", unsafe_allow_html=True)
-    st.markdown("<h2 style='color:#1A365D; margin-top:0;'>🧮 Advanced EMI Calculator</h2><hr>", unsafe_allow_html=True)
     
-    # 1. Broad Loan Amount Input
-    st.markdown("<span class='custom-label'>💳 Select Loan Amount (₹)</span>", unsafe_allow_html=True)
+    # Advanced EMI Calculator Header with Background
+    st.markdown("<div class='section-box-header'>🧮 Advanced EMI Calculator</div>", unsafe_allow_html=True)
+    st.markdown("<hr style='margin: 10px 0 20px 0;'>", unsafe_allow_html=True)
+    
+    # 1. Select Loan Amount Box & Slider
+    st.markdown("<div class='section-box-header' style='font-size: 1.1rem;'>💳 Select Loan Amount (₹)</div>", unsafe_allow_html=True)
     loan_amount = st.slider("", min_value=100000, max_value=5000000, value=1500000, step=50000, label_visibility="collapsed")
-    st.markdown(f"<p style='color:gray; font-weight:bold;'>Selected Amount: ₹ {loan_amount:,.0f}</p><br>", unsafe_allow_html=True)
+    st.markdown(f"<div class='premium-value-box'>₹ {loan_amount:,.0f}</div>", unsafe_allow_html=True)
     
-    # 2. Broad Tenure Input (Up to 10 Years)
-    st.markdown("<span class='custom-label'>⏳ Select Tenure (Years)</span>", unsafe_allow_html=True)
+    # 2. Select Tenure Box & Slider
+    st.markdown("<div class='section-box-header' style='font-size: 1.1rem;'>⏳ Select Tenure (Years)</div>", unsafe_allow_html=True)
     tenure = st.slider("", min_value=1, max_value=10, value=5, step=1, label_visibility="collapsed")
-    st.markdown(f"<p style='color:gray; font-weight:bold;'>Selected Tenure: {tenure} Years ({tenure * 12} Months)</p><br>", unsafe_allow_html=True)
+    st.markdown(f"<div class='premium-value-box'>{tenure} Years ({tenure * 12} Months)</div>", unsafe_allow_html=True)
     
-    # 3. Custom Interest Rate Option
-    st.markdown("<span class='custom-label'>📊 Rate of Interest (% p.a.)</span>", unsafe_allow_html=True)
+    # 3. Rate of Interest Box & Input
+    st.markdown("<div class='section-box-header' style='font-size: 1.1rem;'>📊 Rate of Interest (% p.a.)</div>", unsafe_allow_html=True)
     interest_rate = st.number_input("", min_value=5.0, max_value=25.0, value=10.5, step=0.5, label_visibility="collapsed")
+    st.markdown(f"<div class='premium-value-box'>{interest_rate}% p.a.</div>", unsafe_allow_html=True)
     
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -162,7 +196,7 @@ with col2:
     
     st.markdown("<br><br>", unsafe_allow_html=True)
     
-    # Cinematic Compact Button for Instant Pre-Approval
+    # Cinematic Animated Button for Instant Pre-Approval
     if st.button("Apply for Instant Pre-Approval"):
         st.balloons()
         st.success("✅ Application Submitted Successfully! Our partner bank executive will contact you within 24 hours.")
