@@ -1,23 +1,34 @@
 import streamlit as st
 
 # 1. Page Configuration
-st.set_page_config(page_title="Royal Budget Planner | Bandhan", page_icon="💰", layout="wide")
+st.set_page_config(page_title="Wedding Budget | Bandhan", page_icon="💰", layout="wide")
 
 # 2. Premium CSS for the Page
 st.markdown("""
     <style>
-    .stApp { background-color: #FAFAFA; }
+    /* Attractive Page Background */
+    .stApp { 
+        background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    }
     
-    /* Title Container with Dark Royal Gradient and Stickers */
+    /* Title Container with Dark Royal Gradient */
     .premium-title-container {
-        position: relative;
         background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
-        padding: 40px 20px;
+        padding: 30px 20px;
         border-radius: 20px;
         text-align: center;
         box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         border: 2px solid #D4AF37;
         margin-bottom: 30px;
+    }
+    
+    /* Flexbox to keep stickers inside the frame next to text */
+    .title-flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
     }
     
     /* Golden Gradient Text for Heading */
@@ -33,14 +44,31 @@ st.markdown("""
         text-transform: uppercase;
     }
     
-    /* Stickers */
-    .sticker-left {
-        position: absolute; top: -25px; left: -20px; width: 90px; transform: rotate(-15deg);
-        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    /* Colorful Inner Stickers */
+    .inner-sticker {
+        width: 75px;
+        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
     }
-    .sticker-right {
-        position: absolute; bottom: -25px; right: -20px; width: 90px; transform: rotate(15deg);
-        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    
+    /* Step Headers Background Styling */
+    .step-header {
+        background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+        border-left: 6px solid #D4AF37;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    
+    .step-icon {
+        width: 35px;
+        height: 35px;
     }
     
     /* Grand Total Box */
@@ -53,13 +81,15 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. The Attractive Header Section with Budget Stickers
+# 3. The Attractive Header Section (Stickers are now inside the frame)
 st.markdown("""
 <div class="premium-title-container">
-<img src="https://cdn-icons-png.flaticon.com/512/3141/3141467.png" class="sticker-left">
+<div class="title-flex">
+<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="inner-sticker">
 <h1 class="premium-title">Wedding Budget</h1>
+<img src="https://cdn-icons-png.flaticon.com/512/2953/2953363.png" class="inner-sticker">
+</div>
 <p style="color:#FBF5B7; font-size:1.2rem; margin-top:10px; font-style:italic;">Plan Your Dream Royal Wedding Flawlessly</p>
-<img src="https://cdn-icons-png.flaticon.com/512/2953/2953363.png" class="sticker-right">
 </div>
 """, unsafe_allow_html=True)
 
@@ -67,24 +97,37 @@ st.markdown("""
 col1, col2 = st.columns([1, 2], gap="large")
 
 with col1:
-    st.markdown("### 🎯 Step 1: Set Total Budget")
+    # Step 1 with Background and Icon
+    st.markdown("""
+    <div class="step-header">
+    <img src="https://cdn-icons-png.flaticon.com/512/5501/5501375.png" class="step-icon">
+    Step 1: Set Total Budget
+    </div>
+    """, unsafe_allow_html=True)
     total_budget = st.number_input("Enter Amount (in INR ₹)", min_value=100000, max_value=50000000, value=2500000, step=50000)
     
-    st.markdown("### 👥 Step 2: Guest Count")
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Step 2 with Background and Icon
+    st.markdown("""
+    <div class="step-header">
+    <img src="https://cdn-icons-png.flaticon.com/512/3126/3126647.png" class="step-icon">
+    Step 2: Guest Count
+    </div>
+    """, unsafe_allow_html=True)
     guests = st.slider("Estimated Number of Guests", 50, 2000, 500)
     
-    st.button("🔄 Recalculate AI Plan", type="primary", use_container_width=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.button("🔄 Recalculate Plan", type="primary", use_container_width=True)
 
 with col2:
     st.markdown(f"<div class='total-box'>Grand Total: ₹ {total_budget:,.0f}</div><br>", unsafe_allow_html=True)
     
-    # AI Logic for Budget Breakdown
+    # Logic for Budget Breakdown
     venue_cat = int(total_budget * 0.40)
     jewelry = int(total_budget * 0.25)
     apparel = int(total_budget * 0.15)
     photo_misc = int(total_budget * 0.20)
-    
-    st.markdown("### 📊 Recommended Breakdown")
     
     # Custom Function to Create Premium Image Cards
     def create_budget_card(title, amount, percentage, img_url, color):
@@ -108,10 +151,10 @@ with col2:
         "#D4AF37"
     ), unsafe_allow_html=True)
     
-    # 2. Jewelry Card
+    # 2. Jewelry Card (Fixed Image URL)
     st.markdown(create_budget_card(
         "💍 Wedding Jewelry & Ornaments", jewelry, 25, 
-        "https://images.unsplash.com/photo-1599643477874-5c866f5c88c7?auto=format&fit=crop&w=400&q=80", 
+        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80", 
         "#8E44AD"
     ), unsafe_allow_html=True)
     
@@ -128,6 +171,3 @@ with col2:
         "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=400&q=80", 
         "#2980B9"
     ), unsafe_allow_html=True)
-
-st.markdown("<br><hr>", unsafe_allow_html=True)
-st.info("💡 **AI Tip:** Booking your venue 6 months in advance can save you up to 15% on catering costs. Check our 'Wedding Ecosystem' tab for exclusive deals.")
