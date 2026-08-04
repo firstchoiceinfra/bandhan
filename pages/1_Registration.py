@@ -4,14 +4,14 @@ import datetime
 
 # --- DATABASE CONNECTION LOGIC ---
 # Using st.cache_resource so it connects only once
-@st.cache_resource
-def init_connection():
-    # You will add your MongoDB URL in Streamlit Secrets
-    return MongoClient(st.secrets["MONGO_URI"])
+#@st.cache_resource
+#def init_connection():
+ # You will add your MongoDB URL in Streamlit Secrets
+  #  return MongoClient(st.secrets["MONGO_URI"])
 
-client = init_connection()
-db = client["bandhan_db"]
-users_collection = db["users"]
+#client = init_connection()
+#db = client["bandhan_db"]
+#users_collection = db["users"]
 
 # Function to save user data
 def register_new_user(user_data):
