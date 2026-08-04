@@ -245,19 +245,19 @@ with tab1:
         "₹ 18,000", "btn_s10", "Wedding Invitations & Video Package", 18000
     )
 
-    # --- SERVICE 11 ---
+    # --- SERVICE 11 (Fixed with proper Transportation Image) ---
     render_service_card(
         11, "Guest & Couple Transportation Services",
-        "https://images.unsplash.com/photo-1503376712356-6552988147d3?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
         "Luxury Bridal Car & Guest Buses (AC Tempo Traveller)",
         "Decorated luxury bridal car (Mercedes/Audi), plus 2 AC buses & tempo travellers for guest pickup and drop services.",
         "₹ 35,000", "btn_s11", "Transportation & Guest Fleet", 35000
     )
 
-    # --- SERVICE 12 ---
+    # --- SERVICE 12 (Fixed with proper Ghodi, Buggy & Horse Carriage Image) ---
     render_service_card(
         12, "Royal Baraat: Ghodi, Buggy & Band",
-        "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80",
         "Royal Decorated Ghodi, Buggy & Brass Band",
         "Grand royal decorated Ghodi/Buggy for groom entry, traditional brass band team, lighting umbrella (Fanos), and fireworks.",
         "₹ 22,000", "btn_s12", "Royal Baraat (Ghodi, Buggy & Band)", 22000
