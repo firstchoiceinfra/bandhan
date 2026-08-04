@@ -22,15 +22,17 @@ col1, col2 = st.columns([1, 2], gap="large")
 
 with col1:
     st.markdown("### Step 1: Set Total Budget")
-    total_budget = st.number_input("Enter Amount (in USD $)", min_value=1000, max_value=1000000, value=25000, step=1000)
+    # Changed to Indian Rupees (INR) with realistic default values for Indian weddings
+    total_budget = st.number_input("Enter Amount (in INR ₹)", min_value=100000, max_value=50000000, value=1500000, step=50000)
     
     st.markdown("### Step 2: Guest Count")
-    guests = st.slider("Estimated Number of Guests", 50, 1000, 250)
+    guests = st.slider("Estimated Number of Guests", 50, 2000, 400)
     
     st.button("🔄 Recalculate AI Plan", type="primary", use_container_width=True)
 
 with col2:
-    st.markdown(f"<div class='total-box'>Grand Total: ${total_budget:,}</div><br>", unsafe_allow_html=True)
+    # Formatting as INR currency
+    st.markdown(f"<div class='total-box'>Grand Total: ₹ {total_budget:,.0f}</div><br>", unsafe_allow_html=True)
     
     # AI Logic for Budget Breakdown
     venue_cat = int(total_budget * 0.40)
@@ -41,17 +43,17 @@ with col2:
     
     st.markdown("### 📊 Recommended Breakdown")
     
-    # Progress bars and metrics
-    st.markdown(f"<div class='category-box'><b>🏰 Venue & Catering (40%):</b> ${venue_cat:,}</div>", unsafe_allow_html=True)
+    # Progress bars and metrics updated to ₹
+    st.markdown(f"<div class='category-box'><b>🏰 Venue & Catering (40%):</b> ₹ {venue_cat:,.0f}</div>", unsafe_allow_html=True)
     st.progress(40)
     
-    st.markdown(f"<div class='category-box'><b>💍 Jewelry & Accessories (25%):</b> ${jewelry:,}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='category-box'><b>💍 Jewelry & Accessories (25%):</b> ₹ {jewelry:,.0f}</div>", unsafe_allow_html=True)
     st.progress(25)
     
-    st.markdown(f"<div class='category-box'><b>👗 Designer Apparel (15%):</b> ${apparel:,}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='category-box'><b>👗 Designer Apparel (15%):</b> ₹ {apparel:,.0f}</div>", unsafe_allow_html=True)
     st.progress(15)
     
-    st.markdown(f"<div class='category-box'><b>📸 Photography & Misc (20%):</b> ${(photo_video + misc):,}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='category-box'><b>📸 Photography & Misc (20%):</b> ₹ {(photo_video + misc):,.0f}</div>", unsafe_allow_html=True)
     st.progress(20)
 
 st.markdown("<br><hr>", unsafe_allow_html=True)
