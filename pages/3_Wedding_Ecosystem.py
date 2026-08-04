@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 
 # 1. Page Configuration
 st.set_page_config(
@@ -7,148 +8,154 @@ st.set_page_config(
     layout="wide"
 )
 
-# 2. Premium Custom CSS
+# 2. Advanced Dynamic CSS (Gradient & Hover Effects)
 st.markdown("""
     <style>
     .stApp {
-        background-color: #FDFDFD;
+        background-color: #F8F9FA;
     }
-    .eco-header {
-        color: #0F2027;
-        font-family: 'Helvetica Neue', sans-serif;
-        font-weight: 800;
-        font-size: 2.2rem;
-    }
-    .gold-text {
-        color: #D4AF37;
-    }
-    
-    /* Vendor Card Styling */
-    .vendor-card {
-        background-color: white;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    .main-header {
+        background: -webkit-linear-gradient(45deg, #1A365D, #D4AF37);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: 'Trebuchet MS', sans-serif;
+        font-weight: 900;
+        font-size: 3rem;
         text-align: center;
-        border-bottom: 3px solid #1A365D;
-        margin-bottom: 20px;
-        transition: transform 0.3s;
+        margin-bottom: 0px;
     }
-    .vendor-card:hover {
-        transform: translateY(-5px);
+    .dynamic-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        transition: all 0.4s ease;
+        border: 1px solid #EAEAEA;
     }
-    .vendor-title {
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: #1A365D;
-        margin-top: 10px;
-        margin-bottom: 5px;
+    .dynamic-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        border-color: #D4AF37;
     }
-    .vendor-rating {
-        color: #F39C12;
-        font-weight: bold;
-        font-size: 0.9rem;
-        margin-bottom: 10px;
+    .cart-box {
+        background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
     .price-tag {
-        color: #27AE60;
-        font-weight: bold;
-        background-color: #EAFDF0;
-        padding: 4px 8px;
-        border-radius: 4px;
-        display: inline-block;
-        margin-bottom: 15px;
-    }
-    
-    /* Subtitles */
-    .sub-text {
-        font-size: 1.1rem;
-        color: #555555;
-        margin-bottom: 25px;
+        color: #27AE60; font-size: 1.4rem; font-weight: 800;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 3. Page Header
-st.markdown("<h1 class='eco-header'>The Bandhan <span class='gold-text'>Wedding Ecosystem</span> 🛍️</h1>", unsafe_allow_html=True)
-st.markdown("<p class='sub-text'>Plan your dream wedding with our verified, premium partners. From luxury venues to honeymoon packages, book everything in one click.</p>", unsafe_allow_html=True)
+# 3. Session State for Dynamic Cart (वेडिंग प्लानर)
+if 'wedding_cart' not in st.session_state:
+    st.session_state.wedding_cart = []
+if 'total_budget' not in st.session_state:
+    st.session_state.total_budget = 0
+
+# 4. Hero Section
+st.markdown("<h1 class='main-header'>The Ultimate Wedding Ecosystem</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; font-size:1.2rem; color:gray;'>Design your dream wedding dynamically. Add services to your planner and track your estimated budget in real-time.</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# 4. Dynamic Tabs for Ecosystem Categories
-tab1, tab2, tab3, tab4 = st.tabs(["🏰 Luxury Venues", "🚗 Premium Rides", "👗 Designer Apparel", "✈️ Honeymoons"])
+# 5. Dynamic Tabs
+tab1, tab2, tab3 = st.tabs(["🏰 Luxury Venues", "🏎️ Premium Rides", "📋 My Wedding Planner (Cart)"])
 
-# --- TAB 1: Luxury Venues ---
+# --- TAB 1: Luxury Venues (With Booking Animation) ---
 with tab1:
-    st.markdown("### **Handpicked Premium Venues**")
-    v_col1, v_col2, v_col3 = st.columns(3)
+    v_col1, v_col2 = st.columns(2, gap="large")
     
     with v_col1:
-        st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=500&q=80", use_container_width=True)
-        st.markdown("""
-            <div class="vendor-card">
-                <div class="vendor-title">The Royal Orchid Banquet</div>
-                <div class="vendor-rating">⭐⭐⭐⭐⭐ (4.9/5)</div>
-                <div class="price-tag">Starts at $5,000 / day</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.button("Request Quote", key="venue1", use_container_width=True)
+        st.markdown("""<div class='dynamic-card'>""", unsafe_allow_html=True)
+        st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80", use_container_width=True, border_radius=10)
+        st.markdown("### The Royal Orchid Banquet\n⭐⭐⭐⭐⭐ (4.9/5)\n\n<span class='price-tag'>$5,000</span> / Day", unsafe_allow_html=True)
+        
+        if st.button("Check & Add to Planner", key="v1_btn", use_container_width=True):
+            with st.spinner("Checking real-time availability..."):
+                time.sleep(1.5)
+            st.session_state.wedding_cart.append({"item": "Royal Orchid Banquet", "price": 5000})
+            st.session_state.total_budget += 5000
+            st.toast("✅ Venue added to your Wedding Planner!", icon="🏰")
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with v_col2:
-        st.image("https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=500&q=80", use_container_width=True)
-        st.markdown("""
-            <div class="vendor-card">
-                <div class="vendor-title">Sunset Beach Resort (Destination)</div>
-                <div class="vendor-rating">⭐⭐⭐⭐⭐ (4.8/5)</div>
-                <div class="price-tag">Starts at $12,000 / package</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.button("Request Quote", key="venue2", use_container_width=True)
+        st.markdown("""<div class='dynamic-card'>""", unsafe_allow_html=True)
+        st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", use_container_width=True)
+        st.markdown("### Heritage Palace Courtyard\n⭐⭐⭐⭐⭐ (5.0/5)\n\n<span class='price-tag'>$8,500</span> / Day", unsafe_allow_html=True)
         
-    with v_col3:
-        st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80", use_container_width=True)
-        st.markdown("""
-            <div class="vendor-card">
-                <div class="vendor-title">Heritage Palace Courtyard</div>
-                <div class="vendor-rating">⭐⭐⭐⭐⭐ (5.0/5)</div>
-                <div class="price-tag">Starts at $8,500 / day</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.button("Request Quote", key="venue3", use_container_width=True)
+        if st.button("Check & Add to Planner", key="v2_btn", use_container_width=True):
+            with st.spinner("Checking real-time availability..."):
+                time.sleep(1.5)
+            st.session_state.wedding_cart.append({"item": "Heritage Palace Courtyard", "price": 8500})
+            st.session_state.total_budget += 8500
+            st.toast("✅ Venue added to your Wedding Planner!", icon="🏰")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-# --- TAB 2: Premium Rides ---
+# --- TAB 2: Premium Rides (With Dynamic Price Slider) ---
 with tab2:
-    st.markdown("### **Arrive in Style**")
-    r_col1, r_col2 = st.columns(2)
+    r_col1, r_col2 = st.columns(2, gap="large")
     
     with r_col1:
-        st.image("https://images.unsplash.com/photo-1536531388554-7f123fcd1059?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-        st.markdown("""
-            <div class="vendor-card">
-                <div class="vendor-title">Vintage Rolls Royce (1960)</div>
-                <div class="price-tag">$500 / 4 Hours</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.button("Book Ride", key="ride1", type="primary")
+        st.markdown("""<div class='dynamic-card'>""", unsafe_allow_html=True)
+        st.image("https://images.unsplash.com/photo-1503376712356-6552988147d3?auto=format&fit=crop&w=800&q=80", use_container_width=True)
+        st.markdown("### Mercedes-Maybach S-Class")
+        st.markdown("Base Price: **$150 / Hour**")
+        
+        # Dynamic Slider
+        hours_maybach = st.slider("Select Rental Duration (Hours)", min_value=2, max_value=12, value=4, key="slider_m")
+        total_maybach_price = hours_maybach * 150
+        
+        # Real-time Metric
+        st.metric(label="Estimated Cost", value=f"${total_maybach_price}")
+        
+        if st.button("Reserve Ride", key="r1_btn", type="primary", use_container_width=True):
+            st.session_state.wedding_cart.append({"item": f"Maybach ({hours_maybach} Hrs)", "price": total_maybach_price})
+            st.session_state.total_budget += total_maybach_price
+            st.toast(f"✅ Maybach reserved for {hours_maybach} hours!", icon="🚗")
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with r_col2:
-        st.image("https://images.unsplash.com/photo-1503376712356-6552988147d3?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-        st.markdown("""
-            <div class="vendor-card">
-                <div class="vendor-title">Mercedes-Maybach S-Class</div>
-                <div class="price-tag">$800 / Day</div>
-            </div>
-        """, unsafe_allow_html=True)
-        st.button("Book Ride", key="ride2", type="primary")
+        st.markdown("""<div class='dynamic-card'>""", unsafe_allow_html=True)
+        st.image("https://images.unsplash.com/photo-1536531388554-7f123fcd1059?auto=format&fit=crop&w=800&q=80", use_container_width=True)
+        st.markdown("### Vintage Rolls Royce")
+        st.markdown("Base Price: **$250 / Hour**")
+        
+        hours_rolls = st.slider("Select Rental Duration (Hours)", min_value=2, max_value=12, value=4, key="slider_r")
+        total_rolls_price = hours_rolls * 250
+        
+        st.metric(label="Estimated Cost", value=f"${total_rolls_price}")
+        
+        if st.button("Reserve Ride", key="r2_btn", type="primary", use_container_width=True):
+            st.session_state.wedding_cart.append({"item": f"Rolls Royce ({hours_rolls} Hrs)", "price": total_rolls_price})
+            st.session_state.total_budget += total_rolls_price
+            st.toast(f"✅ Rolls Royce reserved for {hours_rolls} hours!", icon="🚗")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-# --- TAB 3: Designer Apparel ---
+# --- TAB 3: My Wedding Planner (Dynamic Cart & Checkout) ---
 with tab3:
-    st.info("Browse exclusive collections from top designers like Sabyasachi, Manish Malhotra, and international bespoke tailors. Virtual try-on (AR) coming soon!")
-    # You can add more cards here similarly
-
-# --- TAB 4: Honeymoons ---
-with tab4:
-    st.markdown("### **Premium Getaways**")
-    st.image("https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1000&q=80", use_container_width=True)
-    st.markdown("#### The Maldives Ultra-Luxury Experience")
-    st.markdown("7 Days / 6 Nights | Private Water Villa | Personal Butler")
-    st.button("View Honeymoon Itinerary", type="primary")
+    st.markdown("<div class='cart-box'>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color:white; margin-top:0;'>📋 Your Customized Wedding Plan</h2>", unsafe_allow_html=True)
+    
+    if len(st.session_state.wedding_cart) == 0:
+        st.warning("Your planner is currently empty. Please add venues or rides from the tabs above.")
+    else:
+        for i, item in enumerate(st.session_state.wedding_cart):
+            st.markdown(f"**{i+1}. {item['item']}**  ..........  **${item['price']}**")
+        
+        st.markdown("---")
+        st.markdown(f"<h3 style='color:#D4AF37;'>Grand Total: ${st.session_state.total_budget}</h3>", unsafe_allow_html=True)
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        if st.button("💳 Proceed to Secure Checkout", type="primary"):
+            st.balloons()
+            st.success("Redirecting to secure payment gateway... (Mock Checkout Complete!)")
+            
+        if st.button("🗑️ Clear Planner"):
+            st.session_state.wedding_cart = []
+            st.session_state.total_budget = 0
+            st.rerun()
+            
+    st.markdown("</div>", unsafe_allow_html=True)
