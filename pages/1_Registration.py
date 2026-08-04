@@ -1,47 +1,91 @@
 import streamlit as st
-from pymongo import MongoClient
 import datetime
 
-# --- DATABASE CONNECTION LOGIC ---
-# Using st.cache_resource so it connects only once
-#@st.cache_resource
-#def init_connection():
- # You will add your MongoDB URL in Streamlit Secrets
-  #  return MongoClient(st.secrets["MONGO_URI"])
+# 1. Page Configuration
+st.set_page_config(
+    page_title="Register | Bandhan.com",
+    page_icon="✨",
+    layout="wide"
+)
 
-#client = init_connection()
-#db = client["bandhan_db"]
-#users_collection = db["users"]
-
-# Function to save user data
-def register_new_user(user_data):
-    try:
-        users_collection.insert_one(user_data)
-        return True
-    except Exception as e:
-        st.error(f"Database Error: {e}")
-        return False
-
-# ... (Your existing Registration Form UI Code goes here) ...
-
-# Inside your TAB 3 (Submit Button logic):
-submit = st.button("Complete Registration & Enter Ecosystem", type="primary")
-
-if submit:
-    # Creating a dictionary of the user's input data
-    new_user_profile = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "email": email,
-        "gender": gender,
-        "religion": religion,
-        "ai_match_enabled": ai_match,
-        "registration_date": datetime.datetime.now()
+# 2. Premium Custom CSS
+st.markdown("""
+    <style>
+    .stApp { background-color: #FDFDFD; }
+    .premium-header {
+        color: #0F2027; font-family: 'Trebuchet MS', sans-serif;
+        font-size: 2.5rem; font-weight: 800; margin-bottom: 0px;
     }
+    .highlight-gold { color: #D4AF37; }
+    .sub-text { font-size: 1.1rem; color: #666666; margin-bottom: 30px; }
+    .stTabs [data-baseweb="tab-list"] { gap: 24px; }
+    .stTabs [data-baseweb="tab"] {
+        height: 50px; background-color: transparent;
+        border-radius: 4px 4px 0px 0px; padding-top: 10px;
+        font-weight: bold; font-size: 1.1rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# 3. Page Header
+st.markdown("<h1 class='premium-header'>Create Your <span class='highlight-gold'>Premium Profile</span></h1>", unsafe_allow_html=True)
+st.markdown("<p class='sub-text'>Experience the world's most advanced AI-powered matrimonial and wedding ecosystem.</p>", unsafe_allow_html=True)
+st.markdown("---")
+
+# 4. Dynamic Tabs
+tab1, tab2, tab3 = st.tabs(["👤 1. Personal Details", "🎯 2. Match Preferences", "🛍️ 3. Wedding Ecosystem"])
+
+# --- TAB 1: Personal Details ---
+with tab1:
+    st.markdown("### **Basic Information**")
+    col1, col2 = st.columns(2)
     
-    # Save to MongoDB
-    is_saved = register_new_user(new_user_profile)
+    with col1:
+        first_name = st.text_input("First Name")
+        email = st.text_input("Email Address")
+        gender = st.selectbox("Gender", ["Select...", "Male", "Female"])
+        
+    with col2:
+        last_name = st.text_input("Last Name")
+        phone = st.text_input("Phone Number")
+        dob = st.date_input("Date of Birth", min_value=datetime.date(1970, 1, 1), max_value=datetime.date(2008, 1, 1))
+
+    st.markdown("### **Background & Profession**")
+    col3, col4 = st.columns(2)
+    with col3:
+        religion = st.selectbox("Religion", ["Select...", "Hindu", "Muslim", "Sikh", "Christian", "Jain", "Other"])
+        education = st.selectbox("Highest Education", ["Select...", "Bachelors", "Masters", "Doctorate", "Other"])
+    with col4:
+        income = st.selectbox("Annual Income", ["Select...", "Below $50k", "$50k - $100k", "Above $100k"])
+
+# --- TAB 2: Match Preferences ---
+with tab2:
+    st.markdown("### **What are you looking for?**")
+    ai_match = st.toggle("🤖 Enable AI Smart Match (Recommended)", value=True)
     
-    if is_saved:
-        st.success("🎉 Registration Successful! Your data is securely saved in our database.")
-        st.balloons()
+    pref_col1, pref_col2 = st.columns(2)
+    with pref_col1:
+        age_range = st.slider("Preferred Age Range", 21, 60, (25, 30))
+    with pref_col2:
+        min_height = st.slider("Minimum Height (in cm)", 140, 210, 150)
+
+# --- TAB 3: Wedding Ecosystem ---
+with tab3:
+    st.markdown("### **Plan Your Dream Wedding**")
+    services = st.multiselect(
+        "Which ecosystem services are you looking for?",
+        ["Luxury Venue", "Designer Bridal Wear", "Premium Catering", "Vintage Cars", "Honeymoon Packages"]
+    )
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Submit Button
+    submit = st.button("Complete Registration & Enter Ecosystem", type="primary", use_container_width=True)
+    
+    if submit:
+        # Check if first name is entered before submitting
+        if first_name == "":
+            st.error("Please enter your First Name in Tab 1.")
+        else:
+            st.success(f"🎉 Registration Successful, {first_name}! Welcome to the Bandhan Premium Ecosystem.")
+            st.balloons()
