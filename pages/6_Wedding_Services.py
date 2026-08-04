@@ -28,15 +28,15 @@ st.markdown("""
         background: white;
         border-radius: 15px;
         padding: 25px;
-        margin-bottom: 20px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+        margin-bottom: 25px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
         border: 1px solid #EAEAEA;
-        border-left: 6px solid #D4AF37;
+        border-left: 8px solid #D4AF37;
         transition: transform 0.3s ease;
     }
     .step-box:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 25px rgba(212, 175, 55, 0.2);
+        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
     }
     .step-number {
         background: #1A365D;
@@ -45,6 +45,25 @@ st.markdown("""
         border-radius: 50px;
         font-weight: bold;
         font-size: 1rem;
+    }
+    /* Royal Background for Service Heading */
+    .service-heading-box {
+        background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        border-bottom: 3px solid #D4AF37;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    /* Colorful Premium Background for Sub-titles / Description */
+    .service-desc-box {
+        background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+        border: 1px solid #CBD5E1;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
     }
     .cart-box {
         background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
@@ -67,7 +86,7 @@ if 'total_budget' not in st.session_state:
 
 # 4. Hero Section
 st.markdown("<h1 class='main-header'>Complete Wedding Services & Management</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; font-size:1.2rem; color:gray;'>Step-by-step verified wedding services including transportation, DJ, invitations, and baraat. Track your grand total in real-time (₹).</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; font-size:1.2rem; color:gray;'>Step-by-step verified wedding services with royal formatting. Track your grand total in real-time (₹).</p>", unsafe_allow_html=True)
 st.markdown("---")
 
 # 5. Dynamic Tabs for Services & Cart
@@ -78,211 +97,158 @@ with tab1:
     st.write("Browse through all essential wedding categories, view images, and add them directly to your custom planner.")
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # --- SERVICE 1: Professional Wedding Planner & Management Agency ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 1</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>📋 Professional Wedding Planner & Management Agency</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### End-to-End Wedding Management & Coordination")
-        st.write("Complete event execution, guest hospitality, and logistics handled by top-rated professional planners.")
-        st.markdown("<span class='price-tag'>₹ 2,00,000 (Management Fee)</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Wedding Planner to Cart", key="btn_planner"):
-            st.session_state.wedding_cart.append({"item": "Professional Wedding Planner Agency", "price": 200000})
-            st.session_state.total_budget += 200000
-            st.toast("✅ Added Wedding Planner Agency to Cart!", icon="📋")
+    # Helper function to render service cards cleanly
+    def render_service_card(step_num, title, img_url, sub_title, desc, price_text, button_key, cart_item_name, price_val):
+        st.markdown(f"""
+        <div class='step-box'>
+            <span class='step-number'>Service {step_num}</span>
+            <div style='margin-top: 15px;'></div>
+        """, unsafe_allow_html=True)
+        
+        c1, c2 = st.columns([1, 2], gap="medium")
+        with c1:
+            st.image(img_url, use_container_width=True)
+        with c2:
+            # Royal Heading Background
+            st.markdown(f"""
+            <div class='service-heading-box'>
+                <h3 style='margin:0; color:#FBF5B7; font-family: Georgia, serif;'>{title}</h3>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Colorful Sub-title & Description Background
+            st.markdown(f"""
+            <div class='service-desc-box'>
+                <h4 style='margin:0 0 8px 0; color:#1A365D;'>{sub_title}</h4>
+                <p style='margin:0; color:#334155; font-size:0.95rem; line-height:1.5;'>{desc}</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown(f"<span class='price-tag'>{price_text}</span>", unsafe_allow_html=True)
+            
+            if st.button(f"➕ Add to Cart", key=button_key, use_container_width=True):
+                st.session_state.wedding_cart.append({"item": cart_item_name, "price": price_val})
+                st.session_state.total_budget += price_val
+                st.toast(f"✅ Added {cart_item_name} to Cart!", icon="🛒")
+                
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    # --- SERVICE 1 ---
+    render_service_card(
+        1, "Professional Wedding Planner & Management Agency",
+        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80",
+        "End-to-End Wedding Management & Coordination",
+        "Complete event execution, guest hospitality, and logistics handled by top-rated professional planners.",
+        "₹ 2,00,000 (Management Fee)", "btn_s1", "Professional Wedding Planner Agency", 200000
+    )
 
-    # --- SERVICE 2: Hall / Lawn (Venues) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 2</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🏰 Banquet Hall, Lawn & Resort</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### The Royal Orchid Banquet & Wedding Lawn")
-        st.write("Spacious air-conditioned hall with green lawn, stage setup, power backup, and guest stay rooms.")
-        st.markdown("<span class='price-tag'>₹ 1,50,000 / Day</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Hall/Lawn to Cart", key="btn_step1"):
-            st.session_state.wedding_cart.append({"item": "Banquet Hall & Lawn", "price": 150000})
-            st.session_state.total_budget += 150000
-            st.toast("✅ Added Banquet Hall to Cart!", icon="🏰")
+    # --- SERVICE 2 ---
+    render_service_card(
+        2, "Banquet Hall, Lawn & Resort",
+        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
+        "The Royal Orchid Banquet & Wedding Lawn",
+        "Spacious air-conditioned hall with green lawn, stage setup, power backup, and guest stay rooms.",
+        "₹ 1,50,000 / Day", "btn_s2", "Banquet Hall & Lawn", 150000
+    )
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    # --- SERVICE 3 ---
+    render_service_card(
+        3, "Designer Wedding Apparel (Outfits)",
+        "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80",
+        "Royal Bridal Lehenga & Groom Sherwani Package",
+        "Exclusive designer wedding collection featuring traditional hand-embroidery and custom fitting.",
+        "₹ 75,000", "btn_s3", "Designer Wedding Apparel", 75000
+    )
 
-    # --- SERVICE 3: Apparel (कपड़े) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 3</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>👗 Designer Wedding Apparel (Outfits)</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Royal Bridal Lehenga & Groom Sherwani Package")
-        st.write("Exclusive designer wedding collection featuring traditional hand-embroidery and custom fitting.")
-        st.markdown("<span class='price-tag'>₹ 75,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Apparel Package to Cart", key="btn_step2"):
-            st.session_state.wedding_cart.append({"item": "Designer Wedding Apparel", "price": 75000})
-            st.session_state.total_budget += 75000
-            st.toast("✅ Added Apparel Package to Cart!", icon="👗")
+    # --- SERVICE 4 ---
+    render_service_card(
+        4, "Wedding Jewelry & Ornaments",
+        "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80",
+        "Certified Gold & Diamond Bridal Set",
+        "Certified Hallmark gold necklace set, maang tikka, earrings, and traditional wedding ornaments.",
+        "₹ 2,50,000 (Rental/Making Package)", "btn_s4", "Wedding Jewelry Set", 250000
+    )
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    # --- SERVICE 5 ---
+    render_service_card(
+        5, "Professional Makeup Artist & Grooming",
+        "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80",
+        "Celebrity Bridal & Groom Makeup Package",
+        "HD airbrush bridal makeup, hair styling, draping, and groom grooming session by professional artists.",
+        "₹ 35,000", "btn_s5", "Bridal & Groom Makeup Service", 35000
+    )
 
-    # --- SERVICE 4: Jewelry (गहने) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 4</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>💍 Wedding Jewelry & Ornaments</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Certified Gold & Diamond Bridal Set")
-        st.write("Certified Hallmark gold necklace set, maang tikka, earrings, and traditional wedding ornaments.")
-        st.markdown("<span class='price-tag'>₹ 2,50,000 (Rental/Making Package)</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Jewelry Package to Cart", key="btn_step3"):
-            st.session_state.wedding_cart.append({"item": "Wedding Jewelry Set", "price": 250000})
-            st.session_state.total_budget += 250000
-            st.toast("✅ Added Jewelry Package to Cart!", icon="💍")
+    # --- SERVICE 6 ---
+    render_service_card(
+        6, "Cinematic Photography & Videography",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80",
+        "4K Cinematic Video, Drone & Candid Shoot",
+        "Complete candid photography, traditional video, drone shots, pre-wedding shoot, and photo album.",
+        "₹ 60,000", "btn_s6", "Cinematic Photography Package", 60000
+    )
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    # --- SERVICE 7 ---
+    render_service_card(
+        7, "Mandap, Stage & Floral Decoration",
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+        "Royal Floral Mandap & Lighting Setup",
+        "Exotic fresh flower arrangements, grand entrance gate, ambient fairy lighting, and theme stage decoration.",
+        "₹ 80,000", "btn_s7", "Mandap & Stage Decoration", 80000
+    )
 
-    # --- SERVICE 5: Makeup Artist (मेकअप) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 5</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>💄 Professional Makeup Artist & Grooming</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Celebrity Bridal & Groom Makeup Package")
-        st.write("HD airbrush bridal makeup, hair styling, draping, and groom grooming session by professional artists.")
-        st.markdown("<span class='price-tag'>₹ 35,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Makeup Service to Cart", key="btn_step4"):
-            st.session_state.wedding_cart.append({"item": "Bridal & Groom Makeup Service", "price": 35000})
-            st.session_state.total_budget += 35000
-            st.toast("✅ Added Makeup Service to Cart!", icon="💄")
+    # --- SERVICE 8 ---
+    render_service_card(
+        8, "Premium Catering & Food Service",
+        "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=600&q=80",
+        "Deluxe Multi-Cuisine Menu (Per 300 Guests)",
+        "Welcome drinks, starters, North/South Indian main courses, live chaat counters, and exotic royal desserts.",
+        "₹ 1,20,000", "btn_s8", "Catering Service (300 Guests)", 120000
+    )
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    # --- SERVICE 9 ---
+    render_service_card(
+        9, "Music, Entertainment & Live DJ",
+        "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80",
+        "Professional DJ Setup, Sound & Dhol Group",
+        "High-power JBL sound system, intelligent dance floor lighting, professional live DJ, and traditional Punjabi dhol.",
+        "₹ 25,000", "btn_s9", "Music, Entertainment & DJ Package", 25000
+    )
 
-    # --- SERVICE 6: Photographer (फोटोग्राफर) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 6</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>📸 Cinematic Photography & Videography</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### 4K Cinematic Video, Drone & Candid Shoot")
-        st.write("Complete candid photography, traditional video, drone shots, pre-wedding shoot, and photo album.")
-        st.markdown("<span class='price-tag'>₹ 60,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Photography to Cart", key="btn_step5"):
-            st.session_state.wedding_cart.append({"item": "Cinematic Photography Package", "price": 60000})
-            st.session_state.total_budget += 60000
-            st.toast("✅ Added Photography to Cart!", icon="📸")
+    # --- SERVICE 10 ---
+    render_service_card(
+        10, "Wedding Invitations & Digital Cards",
+        "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80",
+        "Premium Boxed Invitations & WhatsApp Video Invite",
+        "100 designer box invitation cards with dry fruits/sweets packing + Custom animated WhatsApp video invitation link.",
+        "₹ 18,000", "btn_s10", "Wedding Invitations & Video Package", 18000
+    )
 
-    st.markdown("<br>", unsafe_allow_html=True)
+    # --- SERVICE 11 ---
+    render_service_card(
+        11, "Guest & Couple Transportation Services",
+        "https://images.unsplash.com/photo-1503376712356-6552988147d3?auto=format&fit=crop&w=600&q=80",
+        "Luxury Bridal Car & Guest Buses (AC Tempo Traveller)",
+        "Decorated luxury bridal car (Mercedes/Audi), plus 2 AC buses & tempo travellers for guest pickup and drop services.",
+        "₹ 35,000", "btn_s11", "Transportation & Guest Fleet", 35000
+    )
 
-    # --- SERVICE 7: Decoration (डेकोरेशन) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 7</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🌺 Mandap, Stage & Floral Decoration</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Royal Floral Mandap & Lighting Setup")
-        st.write("Exotic fresh flower arrangements, grand entrance gate, ambient fairy lighting, and theme stage decoration.")
-        st.markdown("<span class='price-tag'>₹ 80,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Decoration to Cart", key="btn_step6"):
-            st.session_state.wedding_cart.append({"item": "Mandap & Stage Decoration", "price": 80000})
-            st.session_state.total_budget += 80000
-            st.toast("✅ Added Decoration to Cart!", icon="🌺")
+    # --- SERVICE 12 ---
+    render_service_card(
+        12, "Royal Baraat: Ghodi, Buggy & Band",
+        "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80",
+        "Royal Decorated Ghodi, Buggy & Brass Band",
+        "Grand royal decorated Ghodi/Buggy for groom entry, traditional brass band team, lighting umbrella (Fanos), and fireworks.",
+        "₹ 22,000", "btn_s12", "Royal Baraat (Ghodi, Buggy & Band)", 22000
+    )
 
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- SERVICE 8: Catering (कैटरिंग) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 8</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🍽️ Premium Catering & Food Service</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Deluxe Multi-Cuisine Menu (Per 300 Guests)")
-        st.write("Welcome drinks, starters, North/South Indian main courses, live chaat counters, and exotic royal desserts.")
-        st.markdown("<span class='price-tag'>₹ 1,20,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Catering to Cart", key="btn_step7"):
-            st.session_state.wedding_cart.append({"item": "Catering Service (300 Guests)", "price": 120000})
-            st.session_state.total_budget += 120000
-            st.toast("✅ Added Catering to Cart!", icon="🍽️")
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- SERVICE 9: Music & Entertainment / DJ (संगीत और डीजे) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 9</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🎵 Music, Entertainment & Live DJ</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Professional DJ Setup, Sound & Dhol Group")
-        st.write("High-power JBL sound system, intelligent dance floor lighting, professional live DJ, and traditional Punjabi dhol for sangeet & wedding.")
-        st.markdown("<span class='price-tag'>₹ 25,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Music & DJ to Cart", key="btn_step9"):
-            st.session_state.wedding_cart.append({"item": "Music, Entertainment & DJ Package", "price": 25000})
-            st.session_state.total_budget += 25000
-            st.toast("✅ Added Music & DJ to Cart!", icon="🎵")
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- SERVICE 10: Invitations & Cards (इनविटेशन कार्ड्स) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 10</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>💌 Wedding Invitations & Digital Cards</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Premium Boxed Invitations & WhatsApp Video Invite")
-        st.write("100 designer box invitation cards with dry fruits/sweets packing + Custom animated WhatsApp video invitation link.")
-        st.markdown("<span class='price-tag'>₹ 18,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Invitations to Cart", key="btn_step10"):
-            st.session_state.wedding_cart.append({"item": "Wedding Invitations & Video Package", "price": 18000})
-            st.session_state.total_budget += 18000
-            st.toast("✅ Added Invitations Package to Cart!", icon="💌")
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- SERVICE 11: Transportation (गाड़ियाँ और बसें) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 11</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🚗 Guest & Couple Transportation Services</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1503376712356-6552988147d3?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Luxury Bridal Car & Guest Buses (AC Tempo Traveller)")
-        st.write("Decorated luxury bridal car (Mercedes/Audi), plus 2 AC buses & tempo travellers for guest pickup and drop services.")
-        st.markdown("<span class='price-tag'>₹ 35,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Transportation to Cart", key="btn_step11"):
-            st.session_state.wedding_cart.append({"item": "Transportation & Guest Fleet", "price": 35000})
-            st.session_state.total_budget += 35000
-            st.toast("✅ Added Transportation to Cart!", icon="🚗")
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- SERVICE 12: Baraat & Ghodi/Buggy (बरात, घोड़ी और बग्गी) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 12</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🐎 Royal Baraat: Ghodi, Buggy & Band</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Royal Decorated Ghodi, Buggy & Brass Band")
-        st.write("Grand royal decorated Ghodi/Buggy for groom entry, traditional brass band team, lighting umbrella (Fanos), and fireworks.")
-        st.markdown("<span class='price-tag'>₹ 22,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Baraat & Ghodi to Cart", key="btn_step12"):
-            st.session_state.wedding_cart.append({"item": "Royal Baraat (Ghodi, Buggy & Band)", "price": 22000})
-            st.session_state.total_budget += 22000
-            st.toast("✅ Added Baraat & Ghodi to Cart!", icon="🐎")
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- SERVICE 13: Rituals & Pandit Ji (पंडित जी) ---
-    st.markdown("<div class='step-box'><span class='step-number'>Service 13</span><h2 style='display:inline; margin-left:10px; color:#1A365D;'>🕉️ Vedic Priest & Ritual Services</h2></div>", unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 2], gap="medium")
-    with c1:
-        st.image("https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=600&q=80", use_container_width=True)
-    with c2:
-        st.markdown("### Experienced Acharya & Complete Pooja Samagri")
-        st.write("Experienced purohits for kundli matching, muhurat checking, engagement, and wedding phera rituals with complete samagri.")
-        st.markdown("<span class='price-tag'>₹ 11,000</span>", unsafe_allow_html=True)
-        if st.button("➕ Add Priest Services to Cart", key="btn_step13"):
-            st.session_state.wedding_cart.append({"item": "Vedic Priest & Ritual Services", "price": 11000})
-            st.session_state.total_budget += 11000
-            st.toast("✅ Added Priest Services to Cart!", icon="🕉️")
+    # --- SERVICE 13 ---
+    render_service_card(
+        13, "Vedic Priest & Ritual Services",
+        "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=600&q=80",
+        "Experienced Acharya & Complete Pooja Samagri",
+        "Experienced purohits for kundli matching, muhurat checking, engagement, and wedding phera rituals with complete samagri.",
+        "₹ 11,000", "btn_s13", "Vedic Priest & Ritual Services", 11000
+    )
 
 # --- TAB 2: My Wedding Planner Cart ---
 with tab2:
