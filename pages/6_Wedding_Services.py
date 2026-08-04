@@ -155,19 +155,19 @@ with tab1:
                 
         st.markdown("</div>", unsafe_allow_html=True)
 
-    # --- SERVICE 1 ---
+    # --- SERVICE 1 (Updated with Wedding Planner / Management Team Image) ---
     render_service_card(
         1, "Professional Wedding Planner & Management Agency",
-        "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
         "End-to-End Wedding Management & Coordination",
         "Complete event execution, guest hospitality, and logistics handled by top-rated professional planners.",
         "₹ 2,00,000 (Management Fee)", "btn_s1", "Professional Wedding Planner Agency", 200000
     )
 
-    # --- SERVICE 2 ---
+    # --- SERVICE 2 (Updated with Banquet Hall & Lawn Image) ---
     render_service_card(
         2, "Banquet Hall, Lawn & Resort",
-        "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1545232979-fbf9e2c55483?auto=format&fit=crop&w=600&q=80",
         "The Royal Orchid Banquet & Wedding Lawn",
         "Spacious air-conditioned hall with green lawn, stage setup, power backup, and guest stay rooms.",
         "₹ 1,50,000 / Day", "btn_s2", "Banquet Hall & Lawn", 150000
@@ -209,10 +209,10 @@ with tab1:
         "₹ 60,000", "btn_s6", "Cinematic Photography Package", 60000
     )
 
-    # --- SERVICE 7 ---
+    # --- SERVICE 7 (Updated with Mandap & Stage Decoration Image) ---
     render_service_card(
         7, "Mandap, Stage & Floral Decoration",
-        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80",
         "Royal Floral Mandap & Lighting Setup",
         "Exotic fresh flower arrangements, grand entrance gate, ambient fairy lighting, and theme stage decoration.",
         "₹ 80,000", "btn_s7", "Mandap & Stage Decoration", 80000
@@ -236,16 +236,16 @@ with tab1:
         "₹ 25,000", "btn_s9", "Music, Entertainment & DJ Package", 25000
     )
 
-    # --- SERVICE 10 ---
+    # --- SERVICE 10 (Updated with Wedding Invitation Card Image) ---
     render_service_card(
         10, "Wedding Invitations & Digital Cards",
-        "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=600&q=80",
         "Premium Boxed Invitations & WhatsApp Video Invite",
         "100 designer box invitation cards with dry fruits/sweets packing + Custom animated WhatsApp video invitation link.",
         "₹ 18,000", "btn_s10", "Wedding Invitations & Video Package", 18000
     )
 
-    # --- SERVICE 11 (Fixed with proper Transportation Image) ---
+    # --- SERVICE 11 ---
     render_service_card(
         11, "Guest & Couple Transportation Services",
         "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
@@ -254,19 +254,19 @@ with tab1:
         "₹ 35,000", "btn_s11", "Transportation & Guest Fleet", 35000
     )
 
-    # --- SERVICE 12 (Fixed with proper Ghodi, Buggy & Horse Carriage Image) ---
+    # --- SERVICE 12 (Updated with Horse Carriage / Buggy / Baraat Image) ---
     render_service_card(
         12, "Royal Baraat: Ghodi, Buggy & Band",
-        "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1621452773781-0f992fd1f5cb?auto=format&fit=crop&w=600&q=80",
         "Royal Decorated Ghodi, Buggy & Brass Band",
         "Grand royal decorated Ghodi/Buggy for groom entry, traditional brass band team, lighting umbrella (Fanos), and fireworks.",
         "₹ 22,000", "btn_s12", "Royal Baraat (Ghodi, Buggy & Band)", 22000
     )
 
-    # --- SERVICE 13 ---
+    # --- SERVICE 13 (Updated with Vedic Priest / Kundli / Pooja Image) ---
     render_service_card(
         13, "Vedic Priest & Ritual Services",
-        "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1610137090629-234237f39f8f?auto=format&fit=crop&w=600&q=80",
         "Experienced Acharya & Complete Pooja Samagri",
         "Experienced purohits for kundli matching, muhurat checking, engagement, and wedding phera rituals with complete samagri.",
         "₹ 11,000", "btn_s13", "Vedic Priest & Ritual Services", 11000
