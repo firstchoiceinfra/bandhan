@@ -1,6 +1,6 @@
 import streamlit as st
 
-# 1. Page Configuration (सबसे ऊपर होना चाहिए)
+# 1. Page Configuration
 st.set_page_config(
     page_title="Bandhan | Premium Matrimony & Ecosystem",
     page_icon="💍",
@@ -8,23 +8,23 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# 2. Premium Custom CSS (मल्टीनेशनल लुक के लिए)
+# 2. Premium Custom CSS (For International Look)
 st.markdown("""
     <style>
-    /* मेन बैकग्राउंड और फॉन्ट */
+    /* Main Background and Font */
     .stApp {
         background-color: #FAFAFA;
         font-family: 'Helvetica Neue', sans-serif;
     }
     
-    /* हेडिंग स्टाइल (Royal Blue & Gold) */
+    /* Heading Style (Royal Blue & Gold) */
     h1 {
         color: #0F2027;
         font-weight: 700;
         letter-spacing: 1px;
     }
     
-    /* प्रीमियम कार्ड्स */
+    /* Premium Cards */
     .feature-box {
         background-color: white;
         padding: 25px;
@@ -38,7 +38,7 @@ st.markdown("""
         transform: translateY(-5px);
     }
     
-    /* सब-हेडिंग और टैगलाइन */
+    /* Sub-heading and Tagline */
     .tagline {
         font-size: 1.5rem;
         color: #555555;
@@ -56,17 +56,17 @@ with col1:
     st.title("Bandhan.com 💍")
     st.markdown("""
         <p class="tagline">
-        <b>रिश्ते वही, सोच नई।</b><br>
-        दुनिया का पहला AI-पावर्ड मैट्रिमोनियल प्लेटफॉर्म और वेडिंग इकोसिस्टम। <br>
-        सही जीवनसाथी चुनने से लेकर, शादी के मंडप और हनीमून तक—सब कुछ एक ही जगह।
+        <b>Traditional Roots, Modern Approach.</b><br>
+        The world's first AI-powered matrimonial platform and complete wedding ecosystem. <br>
+        From finding the perfect life partner to wedding venues and honeymoons—everything in one place.
         </p>
     """, unsafe_allow_html=True)
     
     # Call to action button
-    st.button("अपना प्रीमियम प्रोफाइल बनाएँ (Free)", type="primary", use_container_width=True)
+    st.button("Create Your Premium Profile (Free)", type="primary", use_container_width=True)
 
 with col2:
-    # प्रीमियम कपल/वेडिंग इमेज
+    # Premium Couple/Wedding Image
     st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", 
              caption="The Perfect Match Awaits", use_container_width=True)
 
@@ -82,7 +82,7 @@ with f_col1:
     st.markdown("""
         <div class="feature-box">
             <h3 style='color:#D4AF37;'>🤖 AI Matchmaking</h3>
-            <p>हमारी स्मार्ट AI तकनीक आपके व्यक्तित्व, पसंद और आदतों का विश्लेषण करके सबसे सटीक और योग्य रिश्ते सुझाती है।</p>
+            <p>Our smart AI technology analyzes your personality, preferences, and habits to suggest the most accurate and highly compatible matches.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -91,7 +91,7 @@ with f_col2:
     st.markdown("""
         <div class="feature-box">
             <h3 style='color:#D4AF37;'>🛍️ Complete Ecosystem</h3>
-            <p>डिजाइनर कपड़े, लग्जरी गाड़ियां, बैंक्वेट हॉल, और कैटरिंग। शादी की हर ज़रूरत के लिए हमारे वेरिफाइड वेंडर्स उपलब्ध हैं।</p>
+            <p>Designer bridal wear, luxury cars, banquet halls, and premium catering. Our verified vendors cover every single wedding need.</p>
         </div>
     """, unsafe_allow_html=True)
 
@@ -100,7 +100,7 @@ with f_col3:
     st.markdown("""
         <div class="feature-box">
             <h3 style='color:#D4AF37;'>🔒 100% Secure</h3>
-            <p>आधार और पैन वेरिफिकेशन। आपकी तस्वीरें और जानकारी पूरी तरह से सुरक्षित हैं, आप तय करते हैं कि किसे क्या दिखाना है।</p>
+            <p>Strict Identity Verification. Your personal information and photos are completely secure, giving you full control over your privacy.</p>
         </div>
     """, unsafe_allow_html=True)
 
