@@ -38,33 +38,52 @@ st.markdown("""
         transform: translateY(-5px);
         box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
     }
-    .step-number {
-        background: #1A365D;
-        color: white;
-        padding: 5px 12px;
-        border-radius: 50px;
-        font-weight: bold;
-        font-size: 1rem;
-    }
-    /* Royal Background for Service Heading */
-    .service-heading-box {
+    
+    /* Royal Background for Service Number + Main Heading Combined */
+    .service-main-title-box {
         background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
         color: white;
-        padding: 12px 20px;
+        padding: 12px 18px;
         border-radius: 10px;
         margin-bottom: 12px;
         border-bottom: 3px solid #D4AF37;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
-    /* Colorful Premium Background for Sub-titles / Description */
-    .service-desc-box {
-        background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
-        border: 1px solid #CBD5E1;
-        padding: 15px;
-        border-radius: 10px;
+    
+    .step-badge {
+        background: #D4AF37;
+        color: #0F2027;
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-weight: 900;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+    }
+
+    /* Colorful Background for Sub-heading / Title */
+    .service-sub-title-box {
+        background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
+        border-left: 5px solid #2563EB;
+        color: #1E3A8A;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-weight: 800;
+        font-size: 1.1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* Description Box */
+    .service-desc-text {
+        color: #334155;
+        font-size: 0.95rem;
+        line-height: 1.5;
         margin-bottom: 15px;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
     }
+
     .cart-box {
         background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
         color: white;
@@ -97,30 +116,33 @@ with tab1:
     st.write("Browse through all essential wedding categories, view images, and add them directly to your custom planner.")
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Helper function to render service cards cleanly
+    # Helper function to render service cards cleanly with exact requested formatting
     def render_service_card(step_num, title, img_url, sub_title, desc, price_text, button_key, cart_item_name, price_val):
+        st.markdown("<div class='step-box'>", unsafe_allow_html=True)
+        
+        # Combined Royal Background for Service Number + Main Title
         st.markdown(f"""
-        <div class='step-box'>
-            <span class='step-number'>Service {step_num}</span>
-            <div style='margin-top: 15px;'></div>
+        <div class='service-main-title-box'>
+            <span class='step-badge'>Service {step_num}</span>
+            <h3 style='margin:0; color:#FBF5B7; font-family: Georgia, serif; font-size: 1.35rem;'>{title}</h3>
+        </div>
         """, unsafe_allow_html=True)
         
         c1, c2 = st.columns([1, 2], gap="medium")
         with c1:
             st.image(img_url, use_container_width=True)
         with c2:
-            # Royal Heading Background
+            # Colorful Background for Sub-heading / Title
             st.markdown(f"""
-            <div class='service-heading-box'>
-                <h3 style='margin:0; color:#FBF5B7; font-family: Georgia, serif;'>{title}</h3>
+            <div class='service-sub-title-box'>
+                {sub_title}
             </div>
             """, unsafe_allow_html=True)
             
-            # Colorful Sub-title & Description Background
+            # Description text
             st.markdown(f"""
-            <div class='service-desc-box'>
-                <h4 style='margin:0 0 8px 0; color:#1A365D;'>{sub_title}</h4>
-                <p style='margin:0; color:#334155; font-size:0.95rem; line-height:1.5;'>{desc}</p>
+            <div class='service-desc-text'>
+                {desc}
             </div>
             """, unsafe_allow_html=True)
             
