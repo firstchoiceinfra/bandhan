@@ -70,7 +70,8 @@ with tab1:
     
     with v_col1:
         st.markdown("""<div class='dynamic-card'>""", unsafe_allow_html=True)
-        st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80", use_container_width=True, border_radius=10)
+        # यहाँ से border_radius=10 हटा दिया गया है
+        st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=80", use_container_width=True)
         st.markdown("### The Royal Orchid Banquet\n⭐⭐⭐⭐⭐ (4.9/5)\n\n<span class='price-tag'>$5,000</span> / Day", unsafe_allow_html=True)
         
         if st.button("Check & Add to Planner", key="v1_btn", use_container_width=True):
