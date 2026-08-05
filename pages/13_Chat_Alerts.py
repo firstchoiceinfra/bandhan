@@ -1,8 +1,9 @@
 import streamlit as st
 import time
 
-# Page Configuration
-st.set_page_config(page_title="Chat & Match Alerts | Bandhan", page_icon="💬", layout="wide")
+# 1. Page Configuration
+st.set_page_config(page_title="Chat & Alerts | Bandhan", page_icon="💬", layout="wide")
+
 # --- PREMIUM SIDEBAR CSS (Paste this below st.set_page_config in EVERY file) ---
 st.markdown("""
     <style>
@@ -64,7 +65,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 # --------------------------------------------------------------------------------
-# CSS Styling
+
+# 2. Page CSS Styling
 st.markdown("""
     <style>
     .stApp { background-color: #F8F9FA; }
@@ -95,17 +97,18 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# 3. Main Header
 st.markdown("""
 <div class="tool-header">
-    <h1 style="margin:0; font-family:'Georgia', serif;">💬 Secure Live Chat & Match Alerts</h1>
-    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">Chat safely with your verified matches and receive instant WhatsApp updates.</p>
+    <h1 style="margin:0; font-family:'Georgia', serif;">💬 Chat & Alerts</h1>
+    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">Chat safely with your verified matches and receive instant WhatsApp & Match updates.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Tabs for Chat and Match Alerts
+# 4. Tabs for Chat and Match Alerts
 tab_chat, tab_alerts = st.tabs([
-    "💬 Secure In-App Live Messages",
-    "🔔 Real-Time Match & WhatsApp Alerts"
+    "💬 Secure In-App Messages",
+    "🔔 Match & WhatsApp Alerts"
 ])
 
 # --- TAB 1: Secure In-App Live Messages ---
