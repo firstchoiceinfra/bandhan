@@ -1,19 +1,13 @@
 import streamlit as st
 import time
 
-# 1. Page Configuration
-st.set_page_config(
-    page_title="Trust, Chat & Alerts | Bandhan",
-    page_icon="🛡️",
-    layout="wide"
-)
+# Page Configuration
+st.set_page_config(page_title="Chat & Match Alerts | Bandhan", page_icon="💬", layout="wide")
 
-# 2. Premium CSS Styling
+# CSS Styling
 st.markdown("""
     <style>
-    .stApp {
-        background-color: #F8F9FA;
-    }
+    .stApp { background-color: #F8F9FA; }
     .tool-header {
         background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
         padding: 30px; border-radius: 15px; color: white; text-align: center;
@@ -41,45 +35,21 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Main Header
 st.markdown("""
 <div class="tool-header">
-    <h1 style="margin:0; font-family:'Georgia', serif;">🛡️ Trust Verification, Live Chat & Match Alerts</h1>
-    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">KYC security, secure messaging, and real-time smart match notifications including WhatsApp alerts.</p>
+    <h1 style="margin:0; font-family:'Georgia', serif;">💬 Secure Live Chat & Match Alerts</h1>
+    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">Chat safely with your verified matches and receive instant WhatsApp updates.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# 3. Top-level Tabs for KYC, Chat, and Match Alerts
-tab1, tab2, tab3 = st.tabs([
-    "🛡️ ID Verification & Trust Badge (KYC)", 
+# Tabs for Chat and Match Alerts
+tab_chat, tab_alerts = st.tabs([
     "💬 Secure In-App Live Messages",
     "🔔 Real-Time Match & WhatsApp Alerts"
 ])
 
-# --- TAB 1: ID Verification & Trust Badge ---
-with tab1:
-    st.markdown("<div class='section-card'>", unsafe_allow_html=True)
-    st.markdown("<h3>🆔 Get Your Profile 'Verified Trust Badge'</h3>", unsafe_allow_html=True)
-    st.write("Verified profiles get 5x more responses and build instant trust with families.")
-    
-    with st.form("kyc_form"):
-        id_type = st.selectbox("Select Government ID Type", ["Aadhaar Card", "PAN Card", "Passport", "Driving License"])
-        id_number = st.text_input("Enter ID Number")
-        uploaded_file = st.file_uploader("Upload Clear Photo/Scan of ID (JPG/PNG/PDF)", type=["jpg", "png", "pdf"])
-        
-        submit_kyc = st.form_submit_button("📤 Submit for Verification", type="primary")
-        if submit_kyc:
-            if id_number:
-                with st.spinner("Verifying documents with government registry..."):
-                    time.sleep(2)
-                st.balloons()
-                st.success("✅ Document submitted successfully! Your profile will display the 'Verified Trust Badge' within 2 hours.")
-            else:
-                st.warning("Please enter your ID number.")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# --- TAB 2: Secure In-App Live Messages ---
-with tab2:
+# --- TAB 1: Secure In-App Live Messages ---
+with tab_chat:
     st.markdown("<div class='section-card'>", unsafe_allow_html=True)
     
     chat_col1, chat_col2 = st.columns([1, 3], gap="medium")
@@ -131,8 +101,8 @@ with tab2:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# --- TAB 3: Real-Time Match & WhatsApp Alerts ---
-with tab3:
+# --- TAB 2: Real-Time Match & WhatsApp Alerts ---
+with tab_alerts:
     st.markdown("<div class='section-card'>", unsafe_allow_html=True)
     st.markdown("<h3>🔔 Your Daily & Instant Match Alerts</h3>", unsafe_allow_html=True)
     st.write("Smart AI-based alerts generated according to your partner preferences and kundli compatibility.")
@@ -153,7 +123,6 @@ with tab3:
     </div>
     """, unsafe_allow_html=True)
 
-    # Integrated WhatsApp Alert Configuration Box
     st.markdown("""
     <div class="whatsapp-box">
         <h3 style="margin-top:0; color:white;">🟢 Get Instant Match Alerts on WhatsApp</h3>
