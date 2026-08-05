@@ -3,7 +3,7 @@ import time
 
 # 1. Page Configuration
 st.set_page_config(
-    page_title="Trust & Messages | Bandhan",
+    page_title="Trust, Chat & Alerts | Bandhan",
     page_icon="🛡️",
     layout="wide"
 )
@@ -28,21 +28,27 @@ st.markdown("""
         height: 12px; width: 12px; background-color: #27AE60;
         border-radius: 50%; display: inline-block; margin-right: 8px;
     }
+    .alert-card {
+        background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 6px solid #D4AF37;
+        border-top: 1px solid #EAEAEA; border-right: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # Main Header
 st.markdown("""
 <div class="tool-header">
-    <h1 style="margin:0; font-family:'Georgia', serif;">🛡️ Trust Verification & Secure Messaging</h1>
-    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">Ensure 100% authenticity with KYC and chat securely with verified matches.</p>
+    <h1 style="margin:0; font-family:'Georgia', serif;">🛡️ Trust Verification, Live Chat & Match Alerts</h1>
+    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">KYC security, secure messaging, and real-time smart match notifications.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# 3. Top-level Tabs to Switch between KYC and Chat System
-tab1, tab2 = st.tabs([
+# 3. Top-level Tabs for KYC, Chat, and Match Alerts
+tab1, tab2, tab3 = st.tabs([
     "🛡️ ID Verification & Trust Badge (KYC)", 
-    "💬 Secure In-App Live Messages"
+    "💬 Secure In-App Live Messages",
+    "🔔 Real-Time Match Alerts"
 ])
 
 # --- TAB 1: ID Verification & Trust Badge ---
@@ -67,11 +73,10 @@ with tab1:
                 st.warning("Please enter your ID number.")
     st.markdown("</div>", unsafe_allow_html=True)
 
-# --- TAB 2: Secure In-App Live Messages (Your Custom Code Integrated) ---
+# --- TAB 2: Secure In-App Live Messages ---
 with tab2:
     st.markdown("<div class='section-card'>", unsafe_allow_html=True)
     
-    # Using columns or sub-layout to simulate sidebar chat navigation inside the tab
     chat_col1, chat_col2 = st.columns([1, 3], gap="medium")
     
     with chat_col1:
@@ -88,7 +93,6 @@ with tab2:
         st.markdown("<div><span class='status-dot'></span><span style='color:gray;'>Online Now & Verified</span></div>", unsafe_allow_html=True)
         st.markdown("---")
 
-        # Session State for Dynamic Chat History
         chat_key = f"chat_{contact_name}"
 
         if chat_key not in st.session_state:
@@ -97,12 +101,10 @@ with tab2:
             else:
                 st.session_state[chat_key] = [{"role": "assistant", "content": f"Hi there! I saw we have a high AI compatibility score. How are you doing?"}]
 
-        # Display Chat History Container
         for message in st.session_state[chat_key]:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        # Chat Input Field
         if prompt := st.chat_input(f"Message {contact_name}..."):
             st.session_state[chat_key].append({"role": "user", "content": prompt})
             with st.chat_message("user"):
@@ -111,7 +113,7 @@ with tab2:
             with st.chat_message("assistant"):
                 message_placeholder = st.empty()
                 message_placeholder.markdown("*(typing...)*")
-                time.sleep(1.2) # Artificial delay for realism
+                time.sleep(1.2)
                 
                 if "Support" in contact_name:
                     reply = "Thank you for reaching out. A premium relationship manager will call you shortly."
@@ -122,4 +124,40 @@ with tab2:
                 
             st.session_state[chat_key].append({"role": "assistant", "content": reply})
 
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# --- TAB 3: Real-Time Match Alerts ---
+with tab3:
+    st.markdown("<div class='section-card'>", unsafe_allow_html=True)
+    st.markdown("<h3>🔔 Your Daily & Instant Match Alerts</h3>", unsafe_allow_html=True)
+    st.write("Smart AI-based alerts generated according to your partner preferences and kundli compatibility.")
+    
+    st.markdown("""
+    <div class="alert-card">
+        <h4 style="color:#1A365D; margin-top:0;">✨ New High Compatibility Match Found!</h4>
+        <p><b>Profile:</b> Ritu Deshmukh (24 yrs, Nagpur) | <b>Match Score:</b> 96%</p>
+        <p style="color:gray; font-size:0.9rem;">🕒 Alert received 10 minutes ago • Shared similar career & lifestyle goals.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="alert-card" style="border-left-color: #27AE60;">
+        <h4 style="color:#1A365D; margin-top:0;">🛡️ Profile View Alert</h4>
+        <p><b>Sneha Patil (Pune)</b> viewed your verified profile and sent an interest request.</p>
+        <p style="color:gray; font-size:0.9rem;">🕒 Alert received 2 hours ago • Kundli Match: Excellent (32/36 Gunas)</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="alert-card" style="border-left-color: #E74C3C;">
+        <h4 style="color:#1A365D; margin-top:0;">💡 Weekly Smart Recommendation</h4>
+        <p>Based on your recent search filters, we found 5 new profiles matching your criteria in your preferred city.</p>
+        <p style="color:gray; font-size:0.9rem;">🕒 Generated today morning</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("⚙️ Customize Alert Preferences", type="primary"):
+        st.success("🔔 Alert preferences updated! You will receive instant notifications via WhatsApp and In-App alerts.")
+    
     st.markdown("</div>", unsafe_allow_html=True)
