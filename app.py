@@ -67,8 +67,11 @@ with col1:
 
 with col2:
     # Premium Couple/Wedding Image
-    st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", 
-             caption="The Perfect Match Awaits", use_container_width=True)
+    st.image(
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", 
+        caption="The Perfect Match Awaits", 
+        use_container_width=True
+    )
 
 st.markdown("<hr style='border: 1px solid #EAEAEA;'>", unsafe_allow_html=True)
 
