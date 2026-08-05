@@ -2,7 +2,7 @@ import streamlit as st
 import time
 
 # Page Config
-st.set_page_config(page_title="Tools & Verification | Bandhan", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="Trust & Chat | Bandhan", page_icon="🛡️", layout="wide")
 
 # CSS Styling
 st.markdown("""
@@ -23,16 +23,15 @@ st.markdown("""
 
 st.markdown("""
 <div class="tool-header">
-    <h1 style="margin:0; font-family:'Georgia', serif;">🛡️ Trust Verification, Live Chat & Advanced Search</h1>
-    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">Ensure 100% authenticity, chat securely, and filter perfect partner matches.</p>
+    <h1 style="margin:0; font-family:'Georgia', serif;">🛡️ Trust Verification & Secure Live Chat</h1>
+    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">Ensure 100% authenticity with KYC and chat securely with your matches.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Tabs for the 3 new features
-tab1, tab2, tab3 = st.tabs([
+# Tabs for KYC and Chat
+tab1, tab2 = st.tabs([
     "🛡️ ID Verification & Trust Badge (KYC)", 
-    "💬 Secure In-App Live Chat", 
-    "🎯 Advanced Partner Search Filter"
+    "💬 Secure In-App Live Chat"
 ])
 
 # --- TAB 1: ID Verification & Trust Badge ---
@@ -63,12 +62,10 @@ with tab2:
     st.markdown("<h3>💬 Secure Chat Box</h3>", unsafe_allow_html=True)
     st.write("Chat with your connected matches without sharing your personal phone number.")
     
-    # Chat simulation interface
     match_selected = st.selectbox("Select Active Match", ["Priya Sharma (98% Match)", "Ananya Gupta (92% Match)", "Neha Verma (88% Match)"])
     
     st.markdown(f"<p style='color:gray; font-weight:bold;'>Chatting with: {match_selected}</p>", unsafe_allow_html=True)
     
-    # Chat history container
     chat_container = st.container()
     with chat_container:
         st.markdown("<div style='background:#F1F5F9; padding:15px; border-radius:10px; height:200px; overflow-y:auto;'>", unsafe_allow_html=True)
@@ -82,36 +79,4 @@ with tab2:
             st.toast("💬 Message sent securely!", icon="🚀")
         else:
             st.warning("Type a message to send.")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# --- TAB 3: Advanced Partner Search Filter ---
-with tab3:
-    st.markdown("<div class='section-card'>", unsafe_allow_html=True)
-    st.markdown("<h3>🎯 Advanced Partner Preference Filter</h3>", unsafe_allow_html=True)
-    
-    f_col1, f_col2 = st.columns(2, gap="large")
-    
-    with f_col1:
-        age_range = st.slider("Select Age Range", 18, 50, (21, 28))
-        religion = st.selectbox("Religion", ["Any", "Hindu", "Muslim", "Sikh", "Christian", "Jain"])
-        profession = st.selectbox("Profession / Occupation", ["Any", "Software Engineer", "Doctor", "Business Owner", "Chartered Accountant", "Civil Servant"])
-    
-    with f_col2:
-        city = st.selectbox("Preferred City / Location", ["Any", "Nagpur", "Mumbai", "Pune", "Bangalore", "Delhi", "Hyderabad"])
-        income = st.selectbox("Annual Income", ["Any", "₹ 5 Lakhs - ₹ 10 Lakhs", "₹ 10 Lakhs - ₹ 20 Lakhs", "₹ 20 Lakhs - ₹ 50 Lakhs", "₹ 50 Lakhs+"])
-        manglik = st.selectbox("Kundli / Manglik Match", ["Doesn't Matter", "Non-Manglik", "Manglik"])
-    
-    st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("🔍 Find Matching Profiles", type="primary", use_container_width=True):
-        with st.spinner("Searching verified database for matching profiles..."):
-            time.sleep(1.5)
-        st.success("✨ Found 42 verified profiles matching your exact preferences!")
-        
-        # Display sample matching results
-        st.markdown("""
-        <div style="background:#F8F9FA; padding:15px; border-radius:10px; margin-top:10px; border-left:5px solid #27AE60;">
-            <h4>🎉 Top Match: Ritu Deshmukh (24 yrs, Nagpur)</h4>
-            <p><b>Profession:</b> Software Engineer | <b>Income:</b> ₹ 12 Lakhs p.a. | <b>Match Score:</b> 96%</p>
-        </div>
-        """, unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
