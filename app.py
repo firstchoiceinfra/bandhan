@@ -5,10 +5,10 @@ st.set_page_config(
     page_title="Bandhan | Premium Matrimony & Ecosystem",
     page_icon="💍",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
-# 2. Premium Custom CSS (For International Look)
+# 2. POWERFUL PREMIUM CSS (Forceful override for Sidebar)
 st.markdown("""
     <style>
     /* Main Background and Font */
@@ -17,7 +17,80 @@ st.markdown("""
         font-family: 'Helvetica Neue', sans-serif;
     }
     
-    /* Heading Style (Royal Blue & Gold) */
+    /* ---------------------------------------------------
+       🔥 EXTREME SIDEBAR STYLING (OVERRIDES DEFAULT) 🔥
+       --------------------------------------------------- */
+       
+    /* 1. Sidebar Background Gradient */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
+        border-right: 3px solid #D4AF37 !important;
+    }
+
+    /* 2. Top Custom Title for Sidebar */
+    [data-testid="stSidebarNav"]::before {
+        content: "👑 Bandhan Menu";
+        color: #D4AF37;
+        font-size: 1.8rem;
+        font-weight: 900;
+        font-family: 'Georgia', serif;
+        text-align: center;
+        display: block;
+        margin-bottom: 25px;
+        padding-top: 20px;
+        letter-spacing: 1px;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        padding-bottom: 15px;
+    }
+
+    /* 3. Style Every Page Link like a Premium Button */
+    [data-testid="stSidebarNav"] a {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+        margin: 8px 15px !important;
+        padding: 12px !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        transition: all 0.3s ease-in-out !important;
+    }
+    
+    /* Text Color inside Links */
+    [data-testid="stSidebarNav"] span {
+        color: #E2E8F0 !important;
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        font-family: 'Helvetica', sans-serif !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    /* 4. Hover Effect - When mouse goes over the button */
+    [data-testid="stSidebarNav"] a:hover {
+        background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%) !important;
+        transform: translateX(8px) !important; /* Button moves slightly right */
+        border-color: #FBF5B7 !important;
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
+    }
+    
+    /* Change text color on hover */
+    [data-testid="stSidebarNav"] a:hover span {
+        color: #0F2027 !important;
+        font-weight: 800 !important;
+    }
+
+    /* 5. Active/Selected Page Styling (Currently open page) */
+    [data-testid="stSidebarNav"] a[aria-current="page"] {
+        background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%) !important;
+        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.6) !important;
+        border: 2px solid #FBF5B7 !important;
+    }
+    
+    /* Active Page Text */
+    [data-testid="stSidebarNav"] a[aria-current="page"] span {
+        color: #0F2027 !important;
+        font-weight: 900 !important;
+    }
+    /* --------------------------------------------------- */
+
+    /* Heading Style */
     h1 {
         color: #0F2027;
         font-weight: 700;
@@ -31,14 +104,12 @@ st.markdown("""
         border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         text-align: center;
-        border-bottom: 4px solid #D4AF37; /* Premium Gold border */
+        border-bottom: 4px solid #D4AF37;
         transition: transform 0.3s ease;
     }
     .feature-box:hover {
         transform: translateY(-5px);
     }
-    
-    /* Sub-heading and Tagline */
     .tagline {
         font-size: 1.5rem;
         color: #555555;
@@ -62,11 +133,9 @@ with col1:
         </p>
     """, unsafe_allow_html=True)
     
-    # Call to action button
     st.button("Create Your Premium Profile (Free)", type="primary", use_container_width=True)
 
 with col2:
-    # Premium Couple/Wedding Image
     st.image(
         "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", 
         caption="The Perfect Match Awaits", 
