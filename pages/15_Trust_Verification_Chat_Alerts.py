@@ -33,6 +33,11 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 6px solid #D4AF37;
         border-top: 1px solid #EAEAEA; border-right: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA;
     }
+    .whatsapp-box {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        color: white; padding: 20px; border-radius: 12px; margin-top: 25px;
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -40,7 +45,7 @@ st.markdown("""
 st.markdown("""
 <div class="tool-header">
     <h1 style="margin:0; font-family:'Georgia', serif;">🛡️ Trust Verification, Live Chat & Match Alerts</h1>
-    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">KYC security, secure messaging, and real-time smart match notifications.</p>
+    <p style="font-size:1.1rem; margin-top:10px; color:#E3F2FD;">KYC security, secure messaging, and real-time smart match notifications including WhatsApp alerts.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -48,7 +53,7 @@ st.markdown("""
 tab1, tab2, tab3 = st.tabs([
     "🛡️ ID Verification & Trust Badge (KYC)", 
     "💬 Secure In-App Live Messages",
-    "🔔 Real-Time Match Alerts"
+    "🔔 Real-Time Match & WhatsApp Alerts"
 ])
 
 # --- TAB 1: ID Verification & Trust Badge ---
@@ -126,7 +131,7 @@ with tab2:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# --- TAB 3: Real-Time Match Alerts ---
+# --- TAB 3: Real-Time Match & WhatsApp Alerts ---
 with tab3:
     st.markdown("<div class='section-card'>", unsafe_allow_html=True)
     st.markdown("<h3>🔔 Your Daily & Instant Match Alerts</h3>", unsafe_allow_html=True)
@@ -148,16 +153,24 @@ with tab3:
     </div>
     """, unsafe_allow_html=True)
 
+    # Integrated WhatsApp Alert Configuration Box
     st.markdown("""
-    <div class="alert-card" style="border-left-color: #E74C3C;">
-        <h4 style="color:#1A365D; margin-top:0;">💡 Weekly Smart Recommendation</h4>
-        <p>Based on your recent search filters, we found 5 new profiles matching your criteria in your preferred city.</p>
-        <p style="color:gray; font-size:0.9rem;">🕒 Generated today morning</p>
+    <div class="whatsapp-box">
+        <h3 style="margin-top:0; color:white;">🟢 Get Instant Match Alerts on WhatsApp</h3>
+        <p>Never miss a connection! Receive direct match recommendations and interest alerts straight to your WhatsApp.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("⚙️ Customize Alert Preferences", type="primary"):
-        st.success("🔔 Alert preferences updated! You will receive instant notifications via WhatsApp and In-App alerts.")
-    
+    with st.form("whatsapp_alert_form"):
+        wa_number = st.text_input("Enter Your WhatsApp Mobile Number (+91)")
+        wa_frequency = st.selectbox("Alert Frequency", ["Instant (Real-time)", "Daily Summary Digest", "Weekly Highlights"])
+        
+        enable_wa = st.form_submit_button("📲 Enable WhatsApp Match Alerts", type="primary")
+        if enable_wa:
+            if wa_number:
+                st.balloons()
+                st.success(f"✅ Success! WhatsApp alerts have been successfully activated for {wa_number}. You will now receive instant match updates.")
+            else:
+                st.warning("Please enter a valid WhatsApp mobile number.")
+
     st.markdown("</div>", unsafe_allow_html=True)
