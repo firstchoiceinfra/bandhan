@@ -7,7 +7,126 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+import streamlit as st
 
+# 1. सबसे पहली लाइन हमेशा page_config की होनी चाहिए
+st.set_page_config(
+    page_title="Bandhan | Premium Matrimony",
+    page_icon="💍",
+    layout="wide"
+)
+
+# =====================================================================
+# 2. <--- यहाँ से आपको अपना वह नया प्रीमियम साइडबार वाला CSS कोड पेस्ट करना है --->
+# =====================================================================
+if 'unread_msgs' not in st.session_state:
+    st.session_state.unread_msgs = 2 
+
+badge_css = ""
+if st.session_state.unread_msgs > 0:
+    badge_css = f"""
+    [data-testid="stSidebarNav"] a[href*="Chat_Alerts"]::after,
+    [data-testid="stSidebarNav"] a[href*="chat_alerts"]::after {{
+        content: "{st.session_state.unread_msgs}";
+        background-color: #FF2A2A !important; color: white !important;
+        font-size: 0.85rem !important; font-weight: 900 !important;
+        border-radius: 50% !important; min-width: 22px; height: 22px;
+        display: flex; align-items: center; justify-content: center;
+        position: absolute; right: 20px; top: 15px;
+        box-shadow: 0 0 10px rgba(255, 42, 42, 0.8);
+        animation: pulse-red 1.5s infinite;
+    }}
+    @keyframes pulse-red {{
+        0% {{ box-shadow: 0 0 0 0 rgba(255, 42, 42, 0.7); }}
+        70% {{ box-shadow: 0 0 0 8px rgba(255, 42, 42, 0); }}
+        100% {{ box-shadow: 0 0 0 0 rgba(255, 42, 42, 0); }}
+    }}
+    """
+
+st.markdown(f"""
+    <style>
+    /* Sidebar Background */
+    [data-testid="stSidebar"] {{
+        background-color: #FFFFFF !important; 
+        border-right: 1px solid #EAEAEA !important;
+    }}
+    
+    /* Hide the default Streamlit top header */
+    [data-testid="stSidebarNav"]::before {{
+        content: "Main Menu"; color: #333; font-size: 1.2rem; font-weight: 900;
+        font-family: 'Helvetica', sans-serif; text-align: center; display: block;
+        margin-bottom: 20px; padding-top: 20px; border-bottom: 1px solid #EAEAEA; padding-bottom: 15px;
+    }}
+
+    /* Container for the links */
+    [data-testid="stSidebarNav"] ul {{
+        display: flex; flex-direction: column; gap: 5px; padding-top: 10px;
+    }}
+
+    /* Main Menu Item Styling (Vertical Layout) */
+    [data-testid="stSidebarNav"] a {{
+        display: flex !important;
+        flex-direction: column !important; 
+        align-items: center !important;
+        text-align: center !important;
+        background-color: transparent !important;
+        border: none !important;
+        padding: 15px 5px !important;
+        position: relative;
+    }}
+
+    /* ICON CIRCLE STYLING (Targeting the Emoji) */
+    [data-testid="stSidebarNav"] a span:first-child {{
+        font-size: 32px !important; 
+        background-color: #F4F5F7 !important; 
+        width: 65px !important;
+        height: 65px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 50% !important; 
+        margin-bottom: 8px !important;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.03) !important;
+        transition: transform 0.2s ease;
+    }}
+
+    /* TEXT STYLING (Below the icon) */
+    [data-testid="stSidebarNav"] a span:last-child {{
+        font-size: 13px !important;
+        color: #4A4A4A !important;
+        font-weight: 600 !important;
+        white-space: pre-wrap !important; 
+        line-height: 1.2 !important;
+        max-width: 90%;
+    }}
+
+    /* Hover Effects */
+    [data-testid="stSidebarNav"] a:hover span:first-child {{
+        transform: scale(1.1); 
+        background-color: #E2E8F0 !important;
+    }}
+
+    /* Active Page Styling */
+    [data-testid="stSidebarNav"] a[aria-current="page"] span:first-child {{
+        background-color: #E3F2FD !important; 
+        border: 2px solid #1976D2 !important;
+    }}
+    [data-testid="stSidebarNav"] a[aria-current="page"] span:last-child {{
+        color: #1976D2 !important;
+        font-weight: 800 !important;
+    }}
+    
+    {badge_css}
+    </style>
+""", unsafe_allow_html=True)
+# =====================================================================
+# <--- यहाँ पर प्रीमियम साइडबार का कोड खत्म हो गया --->
+# =====================================================================
+
+# 3. इसके नीचे आपके उस पेज का बाकी का नॉर्मल कोड आएगा
+# (जैसे Title, Buttons, Tabs, Images आदि)
+st.title("Bandhan.com 💍")
+st.write("बाकी का पूरा कोड यहाँ रहेगा...")
 # 2. POWERFUL PREMIUM CSS (Forceful override for Sidebar)
 st.markdown("""
     <style>
