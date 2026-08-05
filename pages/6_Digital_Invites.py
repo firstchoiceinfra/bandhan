@@ -7,7 +7,67 @@ st.set_page_config(
     page_icon="💌",
     layout="wide"
 )
-
+# --- PREMIUM SIDEBAR CSS (Paste this below st.set_page_config in EVERY file) ---
+st.markdown("""
+    <style>
+    /* ---------------------------------------------------
+       🔥 GLOBAL PREMIUM SIDEBAR STYLING 🔥
+       --------------------------------------------------- */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
+        border-right: 3px solid #D4AF37 !important;
+    }
+    [data-testid="stSidebarNav"]::before {
+        content: "👑 Bandhan Menu";
+        color: #D4AF37;
+        font-size: 1.8rem;
+        font-weight: 900;
+        font-family: 'Georgia', serif;
+        text-align: center;
+        display: block;
+        margin-bottom: 25px;
+        padding-top: 20px;
+        letter-spacing: 1px;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        padding-bottom: 15px;
+    }
+    [data-testid="stSidebarNav"] a {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+        margin: 8px 15px !important;
+        padding: 12px !important;
+        border: 1px solid rgba(212, 175, 55, 0.3) !important;
+        transition: all 0.3s ease-in-out !important;
+    }
+    [data-testid="stSidebarNav"] span {
+        color: #E2E8F0 !important;
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        font-family: 'Helvetica', sans-serif !important;
+        letter-spacing: 0.5px !important;
+    }
+    [data-testid="stSidebarNav"] a:hover {
+        background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%) !important;
+        transform: translateX(8px) !important; 
+        border-color: #FBF5B7 !important;
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
+    }
+    [data-testid="stSidebarNav"] a:hover span {
+        color: #0F2027 !important;
+        font-weight: 800 !important;
+    }
+    [data-testid="stSidebarNav"] a[aria-current="page"] {
+        background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%) !important;
+        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.6) !important;
+        border: 2px solid #FBF5B7 !important;
+    }
+    [data-testid="stSidebarNav"] a[aria-current="page"] span {
+        color: #0F2027 !important;
+        font-weight: 900 !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+# --------------------------------------------------------------------------------
 # 2. Premium Creative CSS
 st.markdown("""
     <style>
