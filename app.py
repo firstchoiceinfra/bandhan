@@ -9,124 +9,116 @@ st.set_page_config(
 )
 import streamlit as st
 
-# 1. सबसे पहली लाइन हमेशा page_config की होनी चाहिए
-st.set_page_config(
-    page_title="Bandhan | Premium Matrimony",
-    page_icon="💍",
-    layout="wide"
-)
+# 1. Page Config
+st.set_page_config(page_title="Bandhan App", layout="wide")
 
 # =====================================================================
-# 2. <--- यहाँ से आपको अपना वह नया प्रीमियम साइडबार वाला CSS कोड पेस्ट करना है --->
+# 2. 🔥 CUSTOM IMAGE-BASED SIDEBAR MENU (Like the Photo) 🔥
 # =====================================================================
-if 'unread_msgs' not in st.session_state:
-    st.session_state.unread_msgs = 2 
 
-badge_css = ""
-if st.session_state.unread_msgs > 0:
-    badge_css = f"""
-    [data-testid="stSidebarNav"] a[href*="Chat_Alerts"]::after,
-    [data-testid="stSidebarNav"] a[href*="chat_alerts"]::after {{
-        content: "{st.session_state.unread_msgs}";
-        background-color: #FF2A2A !important; color: white !important;
-        font-size: 0.85rem !important; font-weight: 900 !important;
-        border-radius: 50% !important; min-width: 22px; height: 22px;
-        display: flex; align-items: center; justify-content: center;
-        position: absolute; right: 20px; top: 15px;
-        box-shadow: 0 0 10px rgba(255, 42, 42, 0.8);
-        animation: pulse-red 1.5s infinite;
-    }}
-    @keyframes pulse-red {{
-        0% {{ box-shadow: 0 0 0 0 rgba(255, 42, 42, 0.7); }}
-        70% {{ box-shadow: 0 0 0 8px rgba(255, 42, 42, 0); }}
-        100% {{ box-shadow: 0 0 0 0 rgba(255, 42, 42, 0); }}
-    }}
-    """
-
-st.markdown(f"""
+st.markdown("""
     <style>
-    /* Sidebar Background */
-    [data-testid="stSidebar"] {{
-        background-color: #FFFFFF !important; 
-        border-right: 1px solid #EAEAEA !important;
-    }}
+    /* Streamlit के पुराने डिफॉल्ट मेन्यू को छिपाना */
+    [data-testid="stSidebarNav"] { display: none !important; }
     
-    /* Hide the default Streamlit top header */
-    [data-testid="stSidebarNav"]::before {{
-        content: "Main Menu"; color: #333; font-size: 1.2rem; font-weight: 900;
-        font-family: 'Helvetica', sans-serif; text-align: center; display: block;
-        margin-bottom: 20px; padding-top: 20px; border-bottom: 1px solid #EAEAEA; padding-bottom: 15px;
-    }}
-
-    /* Container for the links */
-    [data-testid="stSidebarNav"] ul {{
-        display: flex; flex-direction: column; gap: 5px; padding-top: 10px;
-    }}
-
-    /* Main Menu Item Styling (Vertical Layout) */
-    [data-testid="stSidebarNav"] a {{
-        display: flex !important;
-        flex-direction: column !important; 
-        align-items: center !important;
-        text-align: center !important;
-        background-color: transparent !important;
-        border: none !important;
-        padding: 15px 5px !important;
-        position: relative;
-    }}
-
-    /* ICON CIRCLE STYLING (Targeting the Emoji) */
-    [data-testid="stSidebarNav"] a span:first-child {{
-        font-size: 32px !important; 
-        background-color: #F4F5F7 !important; 
-        width: 65px !important;
-        height: 65px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        border-radius: 50% !important; 
-        margin-bottom: 8px !important;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.03) !important;
-        transition: transform 0.2s ease;
-    }}
-
-    /* TEXT STYLING (Below the icon) */
-    [data-testid="stSidebarNav"] a span:last-child {{
-        font-size: 13px !important;
-        color: #4A4A4A !important;
-        font-weight: 600 !important;
-        white-space: pre-wrap !important; 
-        line-height: 1.2 !important;
-        max-width: 90%;
-    }}
-
-    /* Hover Effects */
-    [data-testid="stSidebarNav"] a:hover span:first-child {{
-        transform: scale(1.1); 
-        background-color: #E2E8F0 !important;
-    }}
-
-    /* Active Page Styling */
-    [data-testid="stSidebarNav"] a[aria-current="page"] span:first-child {{
-        background-color: #E3F2FD !important; 
-        border: 2px solid #1976D2 !important;
-    }}
-    [data-testid="stSidebarNav"] a[aria-current="page"] span:last-child {{
-        color: #1976D2 !important;
-        font-weight: 800 !important;
-    }}
-    
-    {badge_css}
+    /* नए मेन्यू का CSS डिजाइन (गोल फोटो और टेक्स्ट नीचे) */
+    .app-sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        padding-top: 10px;
+        align-items: center;
+    }
+    .menu-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none !important;
+        color: #1A365D !important;
+        transition: transform 0.2s;
+        cursor: pointer;
+        width: 100%;
+    }
+    .menu-item:hover {
+        transform: scale(1.05); /* माउस ले जाने पर थोड़ा बड़ा होगा */
+    }
+    .icon-circle {
+        width: 75px;
+        height: 75px;
+        background-color: #F4F6F9; /* फोटो के पीछे का हल्का ग्रे बैकग्राउंड */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border: 1px solid #EAEAEA;
+    }
+    .icon-circle img {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+    }
+    .menu-text {
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-align: center;
+        font-family: 'Helvetica', sans-serif;
+    }
     </style>
 """, unsafe_allow_html=True)
-# =====================================================================
-# <--- यहाँ पर प्रीमियम साइडबार का कोड खत्म हो गया --->
-# =====================================================================
 
-# 3. इसके नीचे आपके उस पेज का बाकी का नॉर्मल कोड आएगा
-# (जैसे Title, Buttons, Tabs, Images आदि)
-st.title("Bandhan.com 💍")
-st.write("बाकी का पूरा कोड यहाँ रहेगा...")
+# 3. HTML कोड जिसमें हर पेज का लिंक और फोटो (Icon URL) है
+sidebar_html = """
+<div class="app-sidebar-menu">
+
+    <!-- 1. Kundli Match -->
+    <a href="Kundli_Match" target="_self" class="menu-item">
+        <div class="icon-circle">
+            <!-- यहाँ आप अपनी पसंद की PNG फोटो का लिंक डाल सकते हैं -->
+            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli">
+        </div>
+        <div class="menu-text">Kundli Match</div>
+    </a>
+    
+    <!-- 2. Registration -->
+    <a href="Registration" target="_self" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration">
+        </div>
+        <div class="menu-text">Registration</div>
+    </a>
+    
+    <!-- 3. Matchmaking -->
+    <a href="Matchmaking" target="_self" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking">
+        </div>
+        <div class="menu-text">Matchmaking</div>
+    </a>
+
+    <!-- 4. Wedding Services -->
+    <a href="Wedding_Services" target="_self" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services">
+        </div>
+        <div class="menu-text">Wedding Services</div>
+    </a>
+    
+    <!-- 5. Verification KYC -->
+    <a href="Verification_KYC" target="_self" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC">
+        </div>
+        <div class="menu-text">Verification KYC</div>
+    </a>
+
+</div>
+"""
+
+# इसे साइडबार में प्रिंट करना
+st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
+# =====================================================================
 # 2. POWERFUL PREMIUM CSS (Forceful override for Sidebar)
 st.markdown("""
     <style>
