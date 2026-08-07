@@ -19,29 +19,43 @@ def get_base64_image(file_path):
 
 logo_b64 = get_base64_image("896327.png")
 
-# 3. SPLASH SCREEN (NOW DARK & MATCHING WITH SIDEBAR)
+# 3. INSTANT DARK ANTI-FLASH SPLASH SCREEN (शुरुआत का सफेद फ्लैश पूरी तरह रोकने के लिए)
 st.markdown(f"""
     <style>
+    /* पेज खुलते ही तुरंत डार्क बैकग्राउंड आ जाएगा, सफेद फ्लैश गायब */
+    .stApp {{
+        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
+        opacity: 0;
+        animation: fadeInApp 0.6s ease-in forwards;
+    }}
+    @keyframes fadeInApp {{
+        to {{ opacity: 1; }}
+    }}
+
+    /* डिफ़ॉल्ट स्ट्रीमलिट नेविगेशन को शुरू से ही छुपा दें */
+    [data-testid="stSidebarNav"] {{ 
+        display: none !important; 
+    }}
+
+    /* फुल-स्क्रीन स्प्लैश स्क्रीन जिसमें सिर्फ आपका लोगो दिखेगा */
     .stApp::after {{
         content: ""; 
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        /* साइडबार की तरह डार्क ब्लू ग्रेडिएंट बैकग्राउंड */
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%); 
         background-image: url("data:image/png;base64,{logo_b64}"); 
         background-repeat: no-repeat;
         background-position: center;
         background-size: 350px; 
-        /* लोगो को डार्क स्क्रीन पर चमकाने के लिए चमक (Glow) */
         filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.5));
-        z-index: 999999; 
+        z-index: 9999999; 
         animation: fadeOutSplash 1.2s ease-in-out forwards; 
     }}
 
     @keyframes fadeOutSplash {{
         0% {{ opacity: 1; visibility: visible; }}
-        65% {{ opacity: 1; visibility: visible; }} 
-        100% {{ opacity: 0; visibility: hidden; }} 
+        70% {{ opacity: 1; visibility: visible; }} 
+        100% {{ opacity: 0; visibility: hidden; pointer-events: none; }} 
     }}
     </style>
 """, unsafe_allow_html=True)
@@ -97,12 +111,6 @@ st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 # 5. POWERFUL PREMIUM CSS (Sidebar Customization)
 st.markdown("""
     <style>
-    /* HIDE DEFAULT STREAMLIT MENU */
-    [data-testid="stSidebarNav"] { display: none !important; }
-
-    /* Main App Background and Font */
-    .stApp { background-color: #FAFAFA; font-family: 'Helvetica Neue', sans-serif; }
-    
     /* Sidebar Background Gradient */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
