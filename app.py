@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. POWERFUL PREMIUM CSS (Forceful override for Sidebar)
+# 2. POWERFUL PREMIUM CSS (Forceful override for Sidebar with Anti-Flash)
 st.markdown("""
     <style>
     /* Main Background and Font */
@@ -21,10 +21,17 @@ st.markdown("""
        🔥 EXTREME SIDEBAR STYLING (OVERRIDES DEFAULT) 🔥
        --------------------------------------------------- */
        
-    /* 1. Sidebar Background Gradient */
+    /* 1. Sidebar Background Gradient & Anti-Flash Smooth Load */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
+        /* यह एनीमेशन पुराने मेनू के झटके (Flash) को रोककर स्मूथ बनाएगा */
+        animation: smoothSidebarLoad 0.4s ease-in-out; 
+    }
+    
+    @keyframes smoothSidebarLoad {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
     }
 
     /* 2. Top Custom Title for Sidebar */
@@ -65,7 +72,7 @@ st.markdown("""
     /* 4. Hover Effect - When mouse goes over the button */
     [data-testid="stSidebarNav"] a:hover {
         background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%) !important;
-        transform: translateX(8px) !important; /* Button moves slightly right */
+        transform: translateX(8px) !important; 
         border-color: #FBF5B7 !important;
         box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
     }
