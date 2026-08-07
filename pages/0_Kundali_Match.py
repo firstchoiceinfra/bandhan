@@ -2,7 +2,7 @@ import streamlit as st
 import time
 import base64
 
-# --- 1. फ्लैश रोकने और नेविगेशन छिपाने के लिए ---
+# --- फ्लैश रोकने और नेविगेशन छिपाने के लिए ---
 st.markdown("""
     <style>
     [data-testid="stSidebarNav"], #stSidebarNav { display: none !important; }
@@ -11,10 +11,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 2. Page Configuration
 st.set_page_config(page_title="Kundali Match | Bandhan", page_icon="🕉️", layout="wide")
 
-# 3. READ LOCAL LOGO
 def get_base64_image(file_path):
     try:
         with open(file_path, "rb") as f:
@@ -24,7 +22,6 @@ def get_base64_image(file_path):
 
 logo_b64 = get_base64_image("896327.png")
 
-# 4. SPLASH SCREEN
 st.markdown(f"""
     <style>
     .stApp::after {{
@@ -48,7 +45,6 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 5. CUSTOM SIDEBAR HTML
 sidebar_html = f"""
     <div class="sidebar-logo-container">
         <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
@@ -82,7 +78,6 @@ sidebar_html = f"""
 """
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
-# 6. SIDEBAR & KUNDALI PAGE SPECIFIC CSS
 st.markdown("""
     <style>
     .stApp { background-color: #FFFDF8 !important; }
@@ -122,14 +117,12 @@ st.markdown("""
     }
     .custom-menu-item:hover .custom-menu-text { color: #0F2027; font-weight: 800; }
     
-    /* Kundli Specific Content Styles */
     .header-kundali { color: #D35400; font-family: 'Georgia', serif; font-size: 2.8rem; text-align: center; font-weight: bold; }
     .guna-score { font-size: 4rem; color: #27AE60; font-weight: 900; text-align: center; }
     .card-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 3px solid #D35400; }
     </style>
 """, unsafe_allow_html=True)
 
-# 7. Kundli Page Content (Boy/Girl Details)
 st.markdown("<h1 class='header-kundali'>🕉️ AI Kundali & Guna Milan</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:gray;'>Our advanced Vedic AI calculates accurate planetary positions and the 36 Gunas for perfect compatibility.</p>", unsafe_allow_html=True)
 st.markdown("---")
