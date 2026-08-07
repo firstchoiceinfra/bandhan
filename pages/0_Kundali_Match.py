@@ -1,10 +1,48 @@
 import streamlit as st
 import time
+import base64
 
 # 1. Page Configuration
 st.set_page_config(page_title="Kundali Match | Bandhan", page_icon="🕉️", layout="wide")
 
-# 2. CUSTOM SIDEBAR HTML (Real Images & Text - Exactly like app.py)
+# 2. READ LOCAL LOGO (896327.png) AUTOMATICALLY
+def get_base64_image(file_path):
+    try:
+        with open(file_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except Exception as e:
+        return ""
+
+logo_b64 = get_base64_image("896327.png")
+
+# 3. SPLASH SCREEN CSS (WITH LOCAL LOGO)
+st.markdown(f"""
+    <style>
+    /* ---------------------------------------------------
+       🔥 SPLASH SCREEN (LOCAL IMAGE LOGO TO HIDE FLASH) 🔥
+       --------------------------------------------------- */
+    .stApp::after {{
+        content: ""; 
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: #FFFFFF; 
+        background-image: url("data:image/png;base64,{logo_b64}"); 
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 350px; 
+        z-index: 999999; 
+        animation: fadeOutSplash 1.2s ease-in-out forwards; 
+    }}
+
+    @keyframes fadeOutSplash {{
+        0% {{ opacity: 1; visibility: visible; }}
+        65% {{ opacity: 1; visibility: visible; }} 
+        100% {{ opacity: 0; visibility: hidden; }} 
+    }}
+    </style>
+""", unsafe_allow_html=True)
+
+# 4. CUSTOM SIDEBAR HTML (Real Images & Text)
 sidebar_html = """
     <div class="sidebar-title">👑 Bandhan Menu</div>
     <div class="custom-sidebar-menu">
@@ -49,43 +87,11 @@ sidebar_html = """
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
 
-# 3. POWERFUL PREMIUM CSS (Splash Screen + Custom Menu + Kundli Design)
+# 5. POWERFUL PREMIUM CSS (Custom Menu + Kundli Design)
 st.markdown("""
     <style>
-    /* ---------------------------------------------------
-       🔥 1. SPLASH SCREEN (MAGIC LOGO TO HIDE FLASH) 🔥
-       --------------------------------------------------- */
-    .stApp::after {
-        content: "💍 Bandhan.com"; 
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%); 
-        color: #D4AF37; 
-        font-size: 3.5rem;
-        font-weight: 900;
-        font-family: 'Georgia', serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 999999; 
-        animation: fadeOutSplash 1s ease-in-out forwards; 
-    }
-
-    @keyframes fadeOutSplash {
-        0% { opacity: 1; visibility: visible; }
-        60% { opacity: 1; visibility: visible; } 
-        100% { opacity: 0; visibility: hidden; } 
-    }
-    
-    /* ---------------------------------------------------
-       🔥 2. HIDE DEFAULT STREAMLIT MENU 🔥
-       --------------------------------------------------- */
-    [data-testid="stSidebarNav"] {
-        display: none !important;
-    }
+    /* HIDE DEFAULT STREAMLIT MENU */
+    [data-testid="stSidebarNav"] { display: none !important; }
 
     /* Main App Background (Off-white for Kundli Page) */
     .stApp { background-color: #FFFDF8 !important; }
@@ -96,9 +102,7 @@ st.markdown("""
         border-right: 3px solid #D4AF37 !important;
     }
 
-    /* ---------------------------------------------------
-       🔥 3. CUSTOM MENU STYLING 🔥
-       --------------------------------------------------- */
+    /* CUSTOM MENU STYLING */
     .sidebar-title {
         color: #D4AF37; font-size: 1.8rem; font-weight: 900;
         font-family: 'Georgia', serif; text-align: center; display: block;
@@ -106,69 +110,36 @@ st.markdown("""
         border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;
     }
 
-    .custom-sidebar-menu {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
+    .custom-sidebar-menu { display: flex; flex-direction: column; gap: 12px; }
 
     .custom-menu-item {
-        display: flex;
-        flex-direction: row; 
-        align-items: center; 
-        justify-content: flex-start; 
-        background-color: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 10px 15px;
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        text-decoration: none !important;
+        display: flex; flex-direction: row; align-items: center; justify-content: flex-start; 
+        background-color: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 10px 15px;
+        border: 1px solid rgba(212, 175, 55, 0.3); text-decoration: none !important;
         transition: all 0.3s ease-in-out;
     }
 
     .custom-menu-item:hover {
         background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
-        transform: translateX(8px);
-        border-color: #FBF5B7;
-        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        transform: translateX(8px); border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
     }
 
     .custom-icon-circle {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        background-color: #FFFFFF; 
-        border-radius: 50%; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 15px; 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        overflow: hidden; 
+        width: 42px; height: 42px; min-width: 42px; background-color: #FFFFFF; 
+        border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        margin-right: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); overflow: hidden; 
     }
 
-    .custom-icon-circle img {
-        width: 28px; 
-        height: 28px;
-        object-fit: contain;
-    }
+    .custom-icon-circle img { width: 28px; height: 28px; object-fit: contain; }
 
     .custom-menu-text {
-        color: #E2E8F0;
-        font-size: 1.05rem;
-        font-weight: 600;
-        font-family: 'Helvetica', sans-serif;
-        text-align: left;
-        line-height: 1.2;
+        color: #E2E8F0; font-size: 1.05rem; font-weight: 600; font-family: 'Helvetica', sans-serif;
+        text-align: left; line-height: 1.2;
     }
 
-    .custom-menu-item:hover .custom-menu-text {
-        color: #0F2027;
-        font-weight: 800;
-    }
+    .custom-menu-item:hover .custom-menu-text { color: #0F2027; font-weight: 800; }
 
-    /* ---------------------------------------------------
-       🔥 4. KUNDALI MATCH PAGE SPECIFIC CSS 🔥
-       --------------------------------------------------- */
+    /* KUNDALI MATCH PAGE SPECIFIC CSS */
     .header-kundali { color: #D35400; font-family: 'Georgia', serif; font-size: 2.8rem; text-align: center; font-weight: bold; }
     .guna-score { font-size: 4rem; color: #27AE60; font-weight: 900; text-align: center; }
     .card-box { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 3px solid #D35400; }
@@ -177,7 +148,7 @@ st.markdown("""
 
 
 # --------------------------------------------------------------------------------
-# 4. PAGE CONTENT (Boy/Girl Details)
+# 6. PAGE CONTENT (Boy/Girl Details)
 # --------------------------------------------------------------------------------
 
 st.markdown("<h1 class='header-kundali'>🕉️ AI Kundali & Guna Milan</h1>", unsafe_allow_html=True)
