@@ -2,7 +2,22 @@ import streamlit as st
 import time
 
 st.set_page_config(page_title="Kundali Match | Bandhan", page_icon="🕉️", layout="wide")
-# --- PREMIUM SIDEBAR CSS WITH LIVE NOTIFICATION BADGE ---
+# हर पेज में यह जोड़ें (ये है आपका अपना कस्टम नेविगेशन)
+st.sidebar.markdown("""
+    <div class="sidebar-title">👑 Bandhan Menu</div>
+    <div class="custom-sidebar-menu">
+        <a href="/" target="_self" class="custom-menu-item">
+            <div class="custom-menu-text">🏠 Home</div>
+        </a>
+        <a href="Kundli_Match" target="_self" class="custom-menu-item">
+            <div class="custom-menu-text">🔮 Kundli Match</div>
+        </a>
+        <a href="Registration" target="_self" class="custom-menu-item">
+            <div class="custom-menu-text">📝 Registration</div>
+        </a>
+        <!-- यहाँ अपने बाकी पेजेस के लिंक जोड़ें -->
+    </div>
+""", unsafe_allow_html=True)# --- PREMIUM SIDEBAR CSS WITH LIVE NOTIFICATION BADGE ---
 if 'unread_msgs' not in st.session_state:
     st.session_state.unread_msgs = 2  # डेमो के लिए शुरुआत में 2 मैसेज सेट किए हैं
 
