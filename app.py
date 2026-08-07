@@ -17,7 +17,7 @@ def get_base64_image(file_path):
     except Exception as e:
         return ""
 
-# यहाँ फाइल का नाम दिया गया है जो आपने GitHub में डाला है
+# यहाँ फाइल का नाम दिया गया है जो आपने GitHub/Local Folder में डाला है
 logo_b64 = get_base64_image("896327.png")
 
 # 3. SPLASH SCREEN CSS (WITH LOCAL LOGO)
@@ -48,9 +48,12 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-# 4. CUSTOM SIDEBAR HTML (Real Images & Text)
-sidebar_html = """
-    <div class="sidebar-title">👑 Bandhan Menu</div>
+# 4. CUSTOM SIDEBAR HTML (Real Logo & Menu Links)
+# ध्यान दें: यहाँ f""" का इस्तेमाल किया गया है ताकि logo_b64 वेरिएबल को HTML में डाला जा सके
+sidebar_html = f"""
+    <div class="sidebar-logo-container">
+        <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
+    </div>
     <div class="custom-sidebar-menu">
         <a href="/" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle">
@@ -108,12 +111,19 @@ st.markdown("""
         border-right: 3px solid #D4AF37 !important;
     }
 
-    /* CUSTOM MENU STYLING */
-    .sidebar-title {
-        color: #D4AF37; font-size: 1.8rem; font-weight: 900;
-        font-family: 'Georgia', serif; text-align: center; display: block;
-        margin-bottom: 25px; padding-top: 10px;
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;
+    /* CUSTOM MENU LOGO STYLING */
+    .sidebar-logo-container {
+        text-align: center; 
+        margin-bottom: 25px; 
+        padding-top: 10px;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
+        padding-bottom: 15px;
+    }
+    
+    .sidebar-main-logo {
+        max-width: 75%; /* लोगो का साइज, आप चाहें तो इसे कम या ज्यादा कर सकते हैं */
+        height: auto;
+        object-fit: contain;
     }
 
     .custom-sidebar-menu { display: flex; flex-direction: column; gap: 12px; }
