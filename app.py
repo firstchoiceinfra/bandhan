@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 
 # 1. Page Configuration
 st.set_page_config(
@@ -8,7 +9,46 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 2. CUSTOM SIDEBAR HTML (Real Images & Text)
+# 2. READ LOCAL LOGO (896327.png) AUTOMATICALLY
+def get_base64_image(file_path):
+    try:
+        with open(file_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except Exception as e:
+        return ""
+
+# यहाँ फाइल का नाम दिया गया है जो आपने GitHub में डाला है
+logo_b64 = get_base64_image("896327.png")
+
+# 3. SPLASH SCREEN CSS (WITH LOCAL LOGO)
+st.markdown(f"""
+    <style>
+    /* ---------------------------------------------------
+       🔥 SPLASH SCREEN (LOCAL IMAGE LOGO TO HIDE FLASH) 🔥
+       --------------------------------------------------- */
+    .stApp::after {{
+        content: ""; 
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: #FFFFFF; 
+        background-image: url("data:image/png;base64,{logo_b64}"); 
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 350px; 
+        z-index: 999999; 
+        animation: fadeOutSplash 1.2s ease-in-out forwards; 
+    }}
+
+    @keyframes fadeOutSplash {{
+        0% {{ opacity: 1; visibility: visible; }}
+        65% {{ opacity: 1; visibility: visible; }} 
+        100% {{ opacity: 0; visibility: hidden; }} 
+    }}
+    </style>
+""", unsafe_allow_html=True)
+
+
+# 4. CUSTOM SIDEBAR HTML (Real Images & Text)
 sidebar_html = """
     <div class="sidebar-title">👑 Bandhan Menu</div>
     <div class="custom-sidebar-menu">
@@ -53,49 +93,14 @@ sidebar_html = """
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
 
-# 3. POWERFUL PREMIUM CSS (Splash Screen + Sidebar Customization)
+# 5. POWERFUL PREMIUM CSS (Sidebar Customization)
 st.markdown("""
     <style>
-    /* ---------------------------------------------------
-       🔥 1. SPLASH SCREEN (MAGIC LOGO TO HIDE FLASH) 🔥
-       --------------------------------------------------- */
-    .stApp::after {
-        content: "💍 Bandhan.com"; 
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%); 
-        color: #D4AF37; 
-        font-size: 3.5rem;
-        font-weight: 900;
-        font-family: 'Georgia', serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 999999; 
-        animation: fadeOutSplash 1s ease-in-out forwards; 
-    }
-
-    @keyframes fadeOutSplash {
-        0% { opacity: 1; visibility: visible; }
-        60% { opacity: 1; visibility: visible; } 
-        100% { opacity: 0; visibility: hidden; } 
-    }
-    
-    /* ---------------------------------------------------
-       🔥 2. HIDE DEFAULT STREAMLIT MENU 🔥
-       --------------------------------------------------- */
-    [data-testid="stSidebarNav"] {
-        display: none !important;
-    }
+    /* HIDE DEFAULT STREAMLIT MENU */
+    [data-testid="stSidebarNav"] { display: none !important; }
 
     /* Main App Background and Font */
-    .stApp {
-        background-color: #FAFAFA;
-        font-family: 'Helvetica Neue', sans-serif;
-    }
+    .stApp { background-color: #FAFAFA; font-family: 'Helvetica Neue', sans-serif; }
     
     /* Sidebar Background Gradient */
     [data-testid="stSidebar"] {
@@ -103,9 +108,7 @@ st.markdown("""
         border-right: 3px solid #D4AF37 !important;
     }
 
-    /* ---------------------------------------------------
-       🔥 3. CUSTOM MENU STYLING 🔥
-       --------------------------------------------------- */
+    /* CUSTOM MENU STYLING */
     .sidebar-title {
         color: #D4AF37; font-size: 1.8rem; font-weight: 900;
         font-family: 'Georgia', serif; text-align: center; display: block;
@@ -113,98 +116,50 @@ st.markdown("""
         border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;
     }
 
-    .custom-sidebar-menu {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
+    .custom-sidebar-menu { display: flex; flex-direction: column; gap: 12px; }
 
     .custom-menu-item {
-        display: flex;
-        flex-direction: row; 
-        align-items: center; 
-        justify-content: flex-start; 
-        background-color: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 10px 15px;
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        text-decoration: none !important;
+        display: flex; flex-direction: row; align-items: center; justify-content: flex-start; 
+        background-color: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 10px 15px;
+        border: 1px solid rgba(212, 175, 55, 0.3); text-decoration: none !important;
         transition: all 0.3s ease-in-out;
     }
 
     .custom-menu-item:hover {
         background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
-        transform: translateX(8px);
-        border-color: #FBF5B7;
-        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        transform: translateX(8px); border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
     }
 
     .custom-icon-circle {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        background-color: #FFFFFF; 
-        border-radius: 50%; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 15px; 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        overflow: hidden; 
+        width: 42px; height: 42px; min-width: 42px; background-color: #FFFFFF; 
+        border-radius: 50%; display: flex; justify-content: center; align-items: center;
+        margin-right: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); overflow: hidden; 
     }
 
-    .custom-icon-circle img {
-        width: 28px; 
-        height: 28px;
-        object-fit: contain;
-    }
+    .custom-icon-circle img { width: 28px; height: 28px; object-fit: contain; }
 
     .custom-menu-text {
-        color: #E2E8F0;
-        font-size: 1.05rem;
-        font-weight: 600;
-        font-family: 'Helvetica', sans-serif;
-        text-align: left;
-        line-height: 1.2;
+        color: #E2E8F0; font-size: 1.05rem; font-weight: 600; font-family: 'Helvetica', sans-serif;
+        text-align: left; line-height: 1.2;
     }
 
-    .custom-menu-item:hover .custom-menu-text {
-        color: #0F2027;
-        font-weight: 800;
-    }
+    .custom-menu-item:hover .custom-menu-text { color: #0F2027; font-weight: 800; }
 
-    /* ---------------------------------------------------
-       🔥 4. PAGE CONTENT STYLING 🔥
-       --------------------------------------------------- */
-    h1 {
-        color: #0F2027;
-        font-weight: 700;
-        letter-spacing: 1px;
-    }
+    /* PAGE CONTENT STYLING */
+    h1 { color: #0F2027; font-weight: 700; letter-spacing: 1px; }
     
     .feature-box {
-        background-color: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        text-align: center;
-        border-bottom: 4px solid #D4AF37;
-        transition: transform 0.3s ease;
+        background-color: white; padding: 25px; border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+        border-bottom: 4px solid #D4AF37; transition: transform 0.3s ease;
     }
-    .feature-box:hover {
-        transform: translateY(-5px);
-    }
-    .tagline {
-        font-size: 1.5rem;
-        color: #555555;
-        font-weight: 300;
-        line-height: 1.6;
-    }
+    .feature-box:hover { transform: translateY(-5px); }
+    .tagline { font-size: 1.5rem; color: #555555; font-weight: 300; line-height: 1.6; }
     </style>
 """, unsafe_allow_html=True)
 
 
-# 4. Hero Section (Top Header & Image)
+# 6. Hero Section (Top Header & Image)
 col1, col2 = st.columns([1.2, 1], gap="large")
 
 with col1:
@@ -230,7 +185,7 @@ with col2:
 st.markdown("<hr style='border: 1px solid #EAEAEA;'>", unsafe_allow_html=True)
 
 
-# 5. Features Section (Ecosystem & AI)
+# 7. Features Section (Ecosystem & AI)
 st.markdown("<h2 style='text-align: center; color: #1A365D;'>The Bandhan Ecosystem</h2><br>", unsafe_allow_html=True)
 
 f_col1, f_col2, f_col3 = st.columns(3, gap="medium")
@@ -263,7 +218,7 @@ with f_col3:
     """, unsafe_allow_html=True)
 
 
-# 6. Footer Section
+# 8. Footer Section
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("""
     <div style='text-align: center; color: #888888; padding: 20px;'>
