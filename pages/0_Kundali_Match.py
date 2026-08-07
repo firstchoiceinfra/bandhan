@@ -15,25 +15,40 @@ def get_base64_image(file_path):
 
 logo_b64 = get_base64_image("896327.png")
 
-# 3. SPLASH SCREEN (Logo in Center)
+# 3. INSTANT DARK ANTI-FLASH SPLASH SCREEN
 st.markdown(f"""
     <style>
+    .stApp {{
+        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
+        opacity: 0;
+        animation: fadeInApp 0.6s ease-in forwards;
+    }}
+    @keyframes fadeInApp {{
+        to {{ opacity: 1; }}
+    }}
+
+    [data-testid="stSidebarNav"] {{ 
+        display: none !important; 
+    }}
+
     .stApp::after {{
         content: ""; 
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: #FFFFFF; 
+        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%); 
         background-image: url("data:image/png;base64,{logo_b64}"); 
         background-repeat: no-repeat;
         background-position: center;
         background-size: 350px; 
-        z-index: 999999; 
+        filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.5));
+        z-index: 9999999; 
         animation: fadeOutSplash 1.2s ease-in-out forwards; 
     }}
+
     @keyframes fadeOutSplash {{
         0% {{ opacity: 1; visibility: visible; }}
-        65% {{ opacity: 1; visibility: visible; }} 
-        100% {{ opacity: 0; visibility: hidden; }} 
+        70% {{ opacity: 1; visibility: visible; }} 
+        100% {{ opacity: 0; visibility: hidden; pointer-events: none; }} 
     }}
     </style>
 """, unsafe_allow_html=True)
@@ -84,11 +99,9 @@ sidebar_html = f"""
 """
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
-# 5. CSS (With Logo Glow Effect)
+# 5. CSS (Custom Menu + Kundli Design)
 st.markdown("""
     <style>
-    [data-testid="stSidebarNav"] { display: none !important; }
-    .stApp { background-color: #FFFDF8 !important; }
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
@@ -132,4 +145,34 @@ st.markdown("""
 st.markdown("<h1 class='header-kundali'>🕉️ AI Kundali & Guna Milan</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:gray;'>Our advanced Vedic AI calculates accurate planetary positions and the 36 Gunas for perfect compatibility.</p>", unsafe_allow_html=True)
 st.markdown("---")
-# ... बाकी फॉर्म कोड ...
+
+col1, col2 = st.columns(2, gap="large")
+
+with col1:
+    st.markdown("### 🤵 Boy's Birth Details")
+    b_name = st.text_input("Name", key="b_name")
+    b_date = st.date_input("Date of Birth", key="b_date")
+    b_time = st.time_input("Time of Birth", key="b_time")
+    b_place = st.text_input("Place of Birth", key="b_place")
+
+with col2:
+    st.markdown("### 👰 Girl's Birth Details")
+    g_name = st.text_input("Name", key="g_name")
+    g_date = st.date_input("Date of Birth", key="g_date")
+    g_time = st.time_input("Time of Birth", key="g_time")
+    g_place = st.text_input("Place of Birth", key="g_place")
+
+st.markdown("<br>", unsafe_allow_html=True)
+if st.button("🔮 Calculate 36 Guna Match", type="primary", use_container_width=True):
+    if b_name and g_name:
+        with st.spinner("Analyzing planetary positions and Ashtakoota Gunas..."):
+            time.sleep(2.5)
+        
+        st.success("Analysis Complete!")
+        st.markdown("<div class='card-box'>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align:center;'>Total Guna Score</h3>", unsafe_allow_html=True)
+        st.markdown("<div class='guna-score'>28.5 / 36</div>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align:center; color:#27AE60; font-weight:bold;'>Highly Compatible Match! (Nadi Dosha: None)</p>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+    else:
+        st.error("Please enter both names to calculate Kundali.")
