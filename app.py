@@ -1,7 +1,7 @@
 import streamlit as st
 import base64
 
-# --- 1. सबसे ज़रूरी: फ्लैश रोकने और डिफ़ॉल्ट नेविगेशन को पूरी तरह बंद करने वाला ब्रह्मास्त्र ---
+# --- 1. फ्लैश रोकने और डिफ़ॉल्ट नेविगेशन को पूरी तरह बंद करने वाला कोड ---
 st.markdown("""
     <style>
     /* डिफ़ॉल्ट स्ट्रीमलिट नेविगेशन को पूरी तरह गायब करें */
@@ -60,7 +60,7 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 5. CUSTOM SIDEBAR HTML (ये आपके कस्टम मेनू को रेंडर करेगा)
+# 5. CUSTOM SIDEBAR HTML
 sidebar_html = f"""
     <div class="sidebar-logo-container">
         <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
@@ -92,17 +92,15 @@ sidebar_html = f"""
         </a>
     </div>
 """
-# साइडबार को वापस इनेबल किया (सिर्फ यहाँ, ऊपर हमने नेविगेशन बंद किया है)
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
 # 6. SIDEBAR & APP STYLING
 st.markdown("""
     <style>
-    /* साइडबार का बैकग्राउंड */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
-        display: block !important; /* इसको ब्लॉक रखें */
+        display: block !important;
     }
     .sidebar-logo-container { text-align: center; margin-bottom: 25px; padding-top: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 15px; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%); }
     .sidebar-main-logo { max-width: 80%; height: auto; filter: drop-shadow(0px 0px 8px rgba(255,255,255,0.8)); }
@@ -112,14 +110,12 @@ st.markdown("""
     .custom-icon-circle { width: 42px; height: 42px; background: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px; overflow: hidden; }
     .custom-icon-circle img { width: 28px; }
     .custom-menu-text { color: #E2E8F0; font-weight: 600; font-family: 'Helvetica', sans-serif; }
-    
-    /* पेज स्टाइलिंग */
     .feature-box { background: white; padding: 25px; border-radius: 15px; border-bottom: 4px solid #D4AF37; }
     .tagline { font-size: 1.5rem; color: #555555; }
     </style>
 """, unsafe_allow_html=True)
 
-# 7. Page Content
+# 7. Content
 col1, col2 = st.columns([1.2, 1], gap="large")
 with col1:
     st.title("Bandhan.com 💍")
@@ -130,4 +126,16 @@ with col2:
     st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80")
 
 st.markdown("<hr>", unsafe_allow_html=True)
-st.write("Bandhan Ecosystem features and footer go here...")
+st.markdown("<h2 style='text-align: center; color: #1A365D;'>The Bandhan Ecosystem</h2><br>", unsafe_allow_html=True)
+f_col1, f_col2, f_col3 = st.columns(3, gap="medium")
+with f_col1:
+    st.image("https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=500&q=80", use_container_width=True)
+    st.markdown("<div class='feature-box'><h3>🤖 AI Matchmaking</h3></div>", unsafe_allow_html=True)
+with f_col2:
+    st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=500&q=80", use_container_width=True)
+    st.markdown("<div class='feature-box'><h3>🛍️ Ecosystem</h3></div>", unsafe_allow_html=True)
+with f_col3:
+    st.image("https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=500&q=80", use_container_width=True)
+    st.markdown("<div class='feature-box'><h3>🔒 Secure</h3></div>", unsafe_allow_html=True)
+
+st.markdown("<br><br><div style='text-align: center; color: #888888;'>Bandhan.com © 2026</div>", unsafe_allow_html=True)
