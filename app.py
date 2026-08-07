@@ -17,7 +17,7 @@ def get_base64_image(file_path):
     except Exception as e:
         return ""
 
-# यहाँ फाइल का नाम दिया गया है जो आपने GitHub/Local Folder में डाला है
+# यहाँ फाइल का नाम दिया गया है जो आपने GitHub में डाला है (बिना बैकग्राउंड वाली फाइल)
 logo_b64 = get_base64_image("896327.png")
 
 # 3. SPLASH SCREEN CSS (WITH LOCAL LOGO)
@@ -49,7 +49,6 @@ st.markdown(f"""
 
 
 # 4. CUSTOM SIDEBAR HTML (Real Logo & Menu Links)
-# ध्यान दें: यहाँ f""" का इस्तेमाल किया गया है ताकि logo_b64 वेरिएबल को HTML में डाला जा सके
 sidebar_html = f"""
     <div class="sidebar-logo-container">
         <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
@@ -111,19 +110,23 @@ st.markdown("""
         border-right: 3px solid #D4AF37 !important;
     }
 
-    /* CUSTOM MENU LOGO STYLING */
+    /* CUSTOM MENU LOGO STYLING (GLOW EFFECT ADDED) */
     .sidebar-logo-container {
         text-align: center; 
         margin-bottom: 25px; 
-        padding-top: 10px;
+        padding-top: 15px;
         border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
         padding-bottom: 15px;
+        /* यह बैकग्राउंड में बहुत हल्की सी रोशनी (Soft Glow) डालेगा */
+        background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
     }
     
     .sidebar-main-logo {
-        max-width: 75%; /* लोगो का साइज, आप चाहें तो इसे कम या ज्यादा कर सकते हैं */
+        max-width: 80%; 
         height: auto;
         object-fit: contain;
+        /* यह लोगो के चारो तरफ एक सफेद चमक बनाएगा जिससे डार्क टेक्स्ट दिखेगा */
+        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.8)); 
     }
 
     .custom-sidebar-menu { display: flex; flex-direction: column; gap: 12px; }
