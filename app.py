@@ -17,24 +17,23 @@ def get_base64_image(file_path):
     except Exception as e:
         return ""
 
-# यहाँ फाइल का नाम दिया गया है जो आपने GitHub में डाला है (बिना बैकग्राउंड वाली फाइल)
 logo_b64 = get_base64_image("896327.png")
 
-# 3. SPLASH SCREEN CSS (WITH LOCAL LOGO)
+# 3. SPLASH SCREEN (NOW DARK & MATCHING WITH SIDEBAR)
 st.markdown(f"""
     <style>
-    /* ---------------------------------------------------
-       🔥 SPLASH SCREEN (LOCAL IMAGE LOGO TO HIDE FLASH) 🔥
-       --------------------------------------------------- */
     .stApp::after {{
         content: ""; 
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: #FFFFFF; 
+        /* साइडबार की तरह डार्क ब्लू ग्रेडिएंट बैकग्राउंड */
+        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%); 
         background-image: url("data:image/png;base64,{logo_b64}"); 
         background-repeat: no-repeat;
         background-position: center;
         background-size: 350px; 
+        /* लोगो को डार्क स्क्रीन पर चमकाने के लिए चमक (Glow) */
+        filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.5));
         z-index: 999999; 
         animation: fadeOutSplash 1.2s ease-in-out forwards; 
     }}
@@ -110,14 +109,13 @@ st.markdown("""
         border-right: 3px solid #D4AF37 !important;
     }
 
-    /* CUSTOM MENU LOGO STYLING (GLOW EFFECT ADDED) */
+    /* CUSTOM MENU LOGO STYLING */
     .sidebar-logo-container {
         text-align: center; 
         margin-bottom: 25px; 
         padding-top: 15px;
         border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
         padding-bottom: 15px;
-        /* यह बैकग्राउंड में बहुत हल्की सी रोशनी (Soft Glow) डालेगा */
         background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
     }
     
@@ -125,7 +123,6 @@ st.markdown("""
         max-width: 80%; 
         height: auto;
         object-fit: contain;
-        /* यह लोगो के चारो तरफ एक सफेद चमक बनाएगा जिससे डार्क टेक्स्ट दिखेगा */
         filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.8)); 
     }
 
