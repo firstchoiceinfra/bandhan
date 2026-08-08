@@ -51,7 +51,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # =====================================================================
-# 4. CUSTOM IMAGE-BASED SIDEBAR MENU
+# 4. CUSTOM IMAGE-BASED SIDEBAR MENU (एरर-फ्री और सुरक्षित तरीका)
 # =====================================================================
 sidebar_html = f"""
 <div class="app-sidebar-menu">
