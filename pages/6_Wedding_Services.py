@@ -1,144 +1,101 @@
 import streamlit as st
 import time
+import base64
 
-# 1. Page Configuration
+# =====================================================================
+# 1. PAGE CONFIGURATION
+# =====================================================================
 st.set_page_config(
     page_title="Wedding Services | Bandhan",
     page_icon="🛍️",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
-# --- PREMIUM SIDEBAR CSS WITH LIVE NOTIFICATION BADGE ---
-if 'unread_msgs' not in st.session_state:
-    st.session_state.unread_msgs = 2  # डेमो के लिए शुरुआत में 2 मैसेज सेट किए हैं
 
-# नोटिफिकेशन बैज का CSS (तभी दिखेगा जब मैसेज 0 से ज्यादा होंगे)
-badge_css = ""
-if st.session_state.unread_msgs > 0:
-    badge_css = f"""
-    [data-testid="stSidebarNav"] a[href*="Chat_Alerts"]::after,
-    [data-testid="stSidebarNav"] a[href*="chat_alerts"]::after {{
-        content: "{st.session_state.unread_msgs}";
-        background-color: #FF2A2A !important;
-        color: white !important;
-        font-size: 0.85rem !important;
-        font-weight: 900 !important;
-        border-radius: 50% !important;
-        min-width: 22px; height: 22px;
-        display: flex; align-items: center; justify-content: center;
-        position: absolute; right: 15px; top: 50%;
-        transform: translateY(-50%);
-        box-shadow: 0 0 10px rgba(255, 42, 42, 0.8);
-        animation: pulse-red 1.5s infinite;
-    }}
-    @keyframes pulse-red {{
-        0% {{ box-shadow: 0 0 0 0 rgba(255, 42, 42, 0.7); }}
-        70% {{ box-shadow: 0 0 0 8px rgba(255, 42, 42, 0); }}
-        100% {{ box-shadow: 0 0 0 0 rgba(255, 42, 42, 0); }}
-    }}
-    """
+# =====================================================================
+# 2. READ LOCAL LOGO (नया लोगो)
+# =====================================================================
+def get_base64_image(file_path):
+    try:
+        with open(file_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except Exception as e:
+        return ""
 
+main_logo_b64 = get_base64_image("896430.png")
+
+# =====================================================================
+# 3. 🔥 ANTI-FLASH & NEW LOGO SPLASH SCREEN 🔥
+# =====================================================================
 st.markdown(f"""
     <style>
-    /* Global Premium Sidebar Styling */
-    [data-testid="stSidebar"] {{
-        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
-        border-right: 3px solid #D4AF37 !important;
-    }}
-    [data-testid="stSidebarNav"]::before {{
-        content: "👑 Bandhan Menu"; color: #D4AF37; font-size: 1.8rem; font-weight: 900;
-        font-family: 'Georgia', serif; text-align: center; display: block;
-        margin-bottom: 25px; padding-top: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;
-    }}
-    [data-testid="stSidebarNav"] a {{
-        background-color: rgba(255, 255, 255, 0.05) !important; border-radius: 12px !important;
-        margin: 8px 15px !important; padding: 12px !important; border: 1px solid rgba(212, 175, 55, 0.3) !important;
-        transition: all 0.3s ease-in-out !important; position: relative;
-    }}
-    [data-testid="stSidebarNav"] span {{
-        color: #E2E8F0 !important; font-size: 1.05rem !important; font-weight: 600 !important;
-    }}
-    [data-testid="stSidebarNav"] a:hover {{
-        background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%) !important;
-        transform: translateX(8px) !important; border-color: #FBF5B7 !important;
-    }}
-    [data-testid="stSidebarNav"] a:hover span {{ color: #0F2027 !important; font-weight: 800 !important; }}
-    [data-testid="stSidebarNav"] a[aria-current="page"] {{
-        background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%) !important;
-        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.6) !important; border: 2px solid #FBF5B7 !important;
-    }}
-    [data-testid="stSidebarNav"] a[aria-current="page"] span {{ color: #0F2027 !important; font-weight: 900 !important; }}
+    [data-testid="stSidebarNav"] {{ display: none !important; }}
     
-    /* Inject the Notification Badge CSS here */
-    {badge_css}
+    .stApp::before {{
+        content: ""; 
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background-color: #0F2027; 
+        background-image: url("data:image/png;base64,{main_logo_b64}"); 
+        background-repeat: no-repeat; background-position: center; background-size: 350px; 
+        z-index: 9999999; animation: fadeOutSplash 0.8s ease-in-out forwards; 
+    }}
+    @keyframes fadeOutSplash {{
+        0% {{ opacity: 1; visibility: visible; }}
+        60% {{ opacity: 1; visibility: visible; }} 
+        100% {{ opacity: 0; visibility: hidden; pointer-events: none; }} 
+    }}
     </style>
 """, unsafe_allow_html=True)
-# --------------------------------------------------------------------------------# --- PREMIUM SIDEBAR CSS (Paste this below st.set_page_config in EVERY file) ---
+
+# =====================================================================
+# 4. 🔥 CUSTOM IMAGE-BASED SIDEBAR MENU (अब नए लोगो के साथ) 🔥
+# =====================================================================
+sidebar_html = f"""
+<div class="app-sidebar-menu">
+    <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;">
+        <img src="data:image/png;base64,{main_logo_b64}" style="max-width: 85%; height: auto; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5));">
+    </div>
+    
+    <a href="/" target="_top" class="menu-item"><div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home"></div><div class="menu-text" style="color: #E2E8F0;">Home</div></a>
+    <a href="Kundli_Match" target="_top" class="menu-item"><div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli"></div><div class="menu-text" style="color: #E2E8F0;">Kundli Match</div></a>
+    <a href="Registration" target="_top" class="menu-item"><div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration"></div><div class="menu-text" style="color: #E2E8F0;">Registration</div></a>
+    <a href="Matchmaking" target="_top" class="menu-item"><div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking"></div><div class="menu-text" style="color: #E2E8F0;">Matchmaking</div></a>
+    <a href="Wedding_Services" target="_top" class="menu-item"><div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services"></div><div class="menu-text" style="color: #E2E8F0;">Wedding Services</div></a>
+    <a href="Verification_KYC" target="_top" class="menu-item"><div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC"></div><div class="menu-text" style="color: #E2E8F0;">Verification KYC</div></a>
+</div>
+"""
+st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
+
+# =====================================================================
+# 5. POWERFUL PREMIUM CSS
+# =====================================================================
 st.markdown("""
     <style>
-    /* ---------------------------------------------------
-       🔥 GLOBAL PREMIUM SIDEBAR STYLING 🔥
-       --------------------------------------------------- */
+    .stApp { background-color: #F8F9FA !important; font-family: 'Helvetica Neue', sans-serif; }
+    
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
     }
-    [data-testid="stSidebarNav"]::before {
-        content: "👑 Bandhan Menu";
-        color: #D4AF37;
-        font-size: 1.8rem;
-        font-weight: 900;
-        font-family: 'Georgia', serif;
-        text-align: center;
-        display: block;
-        margin-bottom: 25px;
-        padding-top: 20px;
-        letter-spacing: 1px;
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-        padding-bottom: 15px;
+    .app-sidebar-menu { display: flex; flex-direction: column; gap: 20px; padding-top: 5px; align-items: center; }
+    .menu-item {
+        display: flex; flex-direction: column; align-items: center; text-decoration: none !important;
+        transition: transform 0.2s, background 0.3s; cursor: pointer; width: 90%; padding: 10px;
+        border-radius: 12px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);
     }
-    [data-testid="stSidebarNav"] a {
-        background-color: rgba(255, 255, 255, 0.05) !important;
-        border-radius: 12px !important;
-        margin: 8px 15px !important;
-        padding: 12px !important;
-        border: 1px solid rgba(212, 175, 55, 0.3) !important;
-        transition: all 0.3s ease-in-out !important;
+    .menu-item:hover {
+        transform: scale(1.05); background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
+        border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
     }
-    [data-testid="stSidebarNav"] span {
-        color: #E2E8F0 !important;
-        font-size: 1.05rem !important;
-        font-weight: 600 !important;
-        font-family: 'Helvetica', sans-serif !important;
-        letter-spacing: 0.5px !important;
+    .menu-item:hover .menu-text { color: #0F2027 !important; font-weight: 900 !important; }
+    .icon-circle {
+        width: 65px; height: 65px; background-color: #FFFFFF; border-radius: 50%;
+        display: flex; justify-content: center; align-items: center; margin-bottom: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
-    [data-testid="stSidebarNav"] a:hover {
-        background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%) !important;
-        transform: translateX(8px) !important; 
-        border-color: #FBF5B7 !important;
-        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
-    }
-    [data-testid="stSidebarNav"] a:hover span {
-        color: #0F2027 !important;
-        font-weight: 800 !important;
-    }
-    [data-testid="stSidebarNav"] a[aria-current="page"] {
-        background: linear-gradient(135deg, #D4AF37 0%, #AA771C 100%) !important;
-        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.6) !important;
-        border: 2px solid #FBF5B7 !important;
-    }
-    [data-testid="stSidebarNav"] a[aria-current="page"] span {
-        color: #0F2027 !important;
-        font-weight: 900 !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-# --------------------------------------------------------------------------------
-# 2. Advanced Dynamic CSS (Gradient & Hover Effects)
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: #F8F9FA;
-    }
+    .icon-circle img { width: 38px; height: 38px; object-fit: contain; }
+    .menu-text { font-size: 0.95rem; font-weight: 700; text-align: center; font-family: 'Helvetica', sans-serif; letter-spacing: 0.5px; transition: color 0.3s; }
+    
+    /* Wedding Services Specific Styles */
     .main-header {
         background: -webkit-linear-gradient(45deg, #1A365D, #D4AF37);
         -webkit-background-clip: text;
@@ -150,90 +107,54 @@ st.markdown("""
         margin-bottom: 0px;
     }
     .step-box {
-        background: white;
-        border-radius: 15px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-        border: 1px solid #EAEAEA;
-        border-left: 8px solid #D4AF37;
-        transition: transform 0.3s ease;
+        background: white; border-radius: 15px; padding: 25px; margin-bottom: 25px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 1px solid #EAEAEA;
+        border-left: 8px solid #D4AF37; transition: transform 0.3s ease;
     }
     .step-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
+        transform: translateY(-5px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
     }
-    
-    /* Royal Background for Service Number + Main Heading Combined */
     .service-main-title-box {
         background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
-        color: white;
-        padding: 12px 18px;
-        border-radius: 10px;
-        margin-bottom: 12px;
-        border-bottom: 3px solid #D4AF37;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        display: flex;
-        align-items: center;
-        gap: 15px;
+        color: white; padding: 12px 18px; border-radius: 10px; margin-bottom: 12px;
+        border-bottom: 3px solid #D4AF37; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        display: flex; align-items: center; gap: 15px;
     }
-    
     .step-badge {
-        background: #D4AF37;
-        color: #0F2027;
-        padding: 4px 12px;
-        border-radius: 50px;
-        font-weight: 900;
-        font-size: 0.95rem;
-        text-transform: uppercase;
+        background: #D4AF37; color: #0F2027; padding: 4px 12px;
+        border-radius: 50px; font-weight: 900; font-size: 0.95rem; text-transform: uppercase;
     }
-
-    /* Colorful Background for Sub-heading / Title */
     .service-sub-title-box {
         background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
-        border-left: 5px solid #2563EB;
-        color: #1E3A8A;
-        padding: 10px 15px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        font-weight: 800;
-        font-size: 1.1rem;
+        border-left: 5px solid #2563EB; color: #1E3A8A; padding: 10px 15px;
+        border-radius: 8px; margin-bottom: 10px; font-weight: 800; font-size: 1.1rem;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-
-    /* Description Box */
-    .service-desc-text {
-        color: #334155;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        margin-bottom: 15px;
-    }
-
+    .service-desc-text { color: #334155; font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px; }
     .cart-box {
         background: linear-gradient(135deg, #1A365D 0%, #0F2027 100%);
-        color: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        color: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
-    .price-tag {
-        color: #27AE60; font-size: 1.4rem; font-weight: 800;
-    }
+    .price-tag { color: #27AE60; font-size: 1.4rem; font-weight: 800; }
     </style>
 """, unsafe_allow_html=True)
 
-# 3. Session State for Dynamic Cart (वेडिंग प्लानर)
+# =====================================================================
+# 6. SESSION STATE FOR DYNAMIC CART
+# =====================================================================
 if 'wedding_cart' not in st.session_state:
     st.session_state.wedding_cart = []
 if 'total_budget' not in st.session_state:
     st.session_state.total_budget = 0
 
-# 4. Hero Section
+# =====================================================================
+# 7. PAGE CONTENT (Wedding Services & Cart)
+# =====================================================================
 st.markdown("<h1 class='main-header'>Complete Wedding Services & Management</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; font-size:1.2rem; color:gray;'>Step-by-step verified wedding services with royal formatting. Track your grand total in real-time (₹).</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# 5. Dynamic Tabs for Services & Cart
+# Dynamic Tabs for Services & Cart
 tab1, tab2 = st.tabs(["📋 Step-by-Step Wedding Services Master List", "🛒 My Wedding Planner Cart"])
 
 with tab1:
@@ -289,7 +210,7 @@ with tab1:
         "₹ 2,00,000 (Management Fee)", "btn_s1", "Professional Wedding Planner Agency", 200000
     )
 
-    # --- SERVICE 2 (Corrected: Banquet Hall / Lawn / Resort) ---
+    # --- SERVICE 2 ---
     render_service_card(
         2, "Banquet Hall, Lawn & Resort",
         "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
@@ -334,7 +255,7 @@ with tab1:
         "₹ 60,000", "btn_s6", "Cinematic Photography Package", 60000
     )
 
-    # --- SERVICE 7 (Corrected: Floral Mandap & Stage Decoration) ---
+    # --- SERVICE 7 ---
     render_service_card(
         7, "Mandap, Stage & Floral Decoration",
         "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=600&q=80",
@@ -361,7 +282,7 @@ with tab1:
         "₹ 25,000", "btn_s9", "Music, Entertainment & DJ Package", 25000
     )
 
-    # --- SERVICE 10 (Corrected: Wedding Invitations Cards) ---
+    # --- SERVICE 10 ---
     render_service_card(
         10, "Wedding Invitations & Digital Cards",
         "https://images.unsplash.com/photo-1538356345638-735c0269986b?auto=format&fit=crop&w=600&q=80",
@@ -379,7 +300,7 @@ with tab1:
         "₹ 35,000", "btn_s11", "Transportation & Guest Fleet", 35000
     )
 
-    # --- SERVICE 12 (Corrected: Horse Carriage / Ghodi / Buggy) ---
+    # --- SERVICE 12 ---
     render_service_card(
         12, "Royal Baraat: Ghodi, Buggy & Band",
         "https://images.unsplash.com/photo-1506541539420-9104b281f6eb?auto=format&fit=crop&w=600&q=80",
@@ -388,7 +309,7 @@ with tab1:
         "₹ 22,000", "btn_s12", "Royal Baraat (Ghodi, Buggy & Band)", 22000
     )
 
-    # --- SERVICE 13 (Corrected: Puja / Kundli / Priest) ---
+    # --- SERVICE 13 ---
     render_service_card(
         13, "Vedic Priest & Ritual Services",
         "https://images.unsplash.com/photo-1604928230588-44498308381d?auto=format&fit=crop&w=600&q=80",
