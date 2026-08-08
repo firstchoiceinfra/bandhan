@@ -1,13 +1,18 @@
 import streamlit as st
 import base64
 
-# --- 1. सबसे ज़रूरी: फ्लैश रोकने और डिफ़ॉल्ट नेविगेशन छिपाने के लिए ---
-# (यहाँ सिर्फ stSidebarNav छिपाया है, जिससे साइडबार टॉगल बटन काम करता रहे)
+# --- 1. सबसे ज़रूरी: फ्लैश रोकने और डिफ़ॉल्ट नेविगेशन को पूरी तरह बंद करने वाला कोड ---
 st.markdown("""
     <style>
-    [data-testid="stSidebarNav"] {
+    /* डिफ़ॉल्ट स्ट्रीमलिट नेविगेशन को पूरी तरह गायब करें */
+    section[data-testid="stSidebar"], [data-testid="stSidebarNav"], #stSidebarNav, .stSidebar {
         display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
     }
+    /* पेज लोड होने तक पूरे ऐप को छिपाएं ताकि फ्लैश न दिखे */
     .stApp { opacity: 0; animation: fadeIn 0.3s ease-in forwards; }
     @keyframes fadeIn { to { opacity: 1; } }
     </style>
@@ -61,27 +66,27 @@ sidebar_html = f"""
         <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
     </div>
     <div class="custom-sidebar-menu">
-        <a href="/" target="_self" class="custom-menu-item">
+        <a href="/?page=home" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"></div>
             <div class="custom-menu-text">Home</div>
         </a>
-        <a href="Kundli_Match" target="_self" class="custom-menu-item">
+        <a href="/?page=kundli" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png"></div>
             <div class="custom-menu-text">Kundli Match</div>
         </a>
-        <a href="Registration" target="_self" class="custom-menu-item">
+        <a href="/?page=registration" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"></div>
             <div class="custom-menu-text">Registration</div>
         </a>
-        <a href="Matchmaking" target="_self" class="custom-menu-item">
+        <a href="/?page=matchmaking" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png"></div>
             <div class="custom-menu-text">Matchmaking</div>
         </a>
-        <a href="Wedding_Services" target="_self" class="custom-menu-item">
+        <a href="/?page=services" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png"></div>
             <div class="custom-menu-text">Wedding Services</div>
         </a>
-        <a href="Chat_Alerts" target="_self" class="custom-menu-item">
+        <a href="/?page=chat" target="_self" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1380/1380370.png"></div>
             <div class="custom-menu-text">Chat & Alerts</div>
         </a>
@@ -95,6 +100,7 @@ st.markdown("""
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
+        display: block !important;
     }
     .sidebar-logo-container { text-align: center; margin-bottom: 25px; padding-top: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 15px; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%); }
     .sidebar-main-logo { max-width: 80%; height: auto; filter: drop-shadow(0px 0px 8px rgba(255,255,255,0.8)); }
@@ -122,15 +128,12 @@ with col2:
 st.markdown("<hr>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: center; color: #1A365D;'>The Bandhan Ecosystem</h2><br>", unsafe_allow_html=True)
 f_col1, f_col2, f_col3 = st.columns(3, gap="medium")
-
 with f_col1:
     st.image("https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=500&q=80", use_container_width=True)
     st.markdown("<div class='feature-box'><h3>🤖 AI Matchmaking</h3></div>", unsafe_allow_html=True)
-
 with f_col2:
     st.image("https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=500&q=80", use_container_width=True)
     st.markdown("<div class='feature-box'><h3>🛍️ Ecosystem</h3></div>", unsafe_allow_html=True)
-
 with f_col3:
     st.image("https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=500&q=80", use_container_width=True)
     st.markdown("<div class='feature-box'><h3>🔒 Secure</h3></div>", unsafe_allow_html=True)
