@@ -1,18 +1,13 @@
 import streamlit as st
 import base64
 
-# --- 1. सबसे ज़रूरी: फ्लैश रोकने और डिफ़ॉल्ट नेविगेशन को पूरी तरह बंद करने वाला कोड ---
+# --- 1. सबसे ज़रूरी: पुराना नेविगेशन हटाएं, कस्टम साइडबार को चालू रखें ---
 st.markdown("""
     <style>
-    /* डिफ़ॉल्ट स्ट्रीमलिट नेविगेशन को पूरी तरह गायब करें */
-    section[data-testid="stSidebar"], [data-testid="stSidebarNav"], #stSidebarNav, .stSidebar {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
-    }
-    /* पेज लोड होने तक पूरे ऐप को छिपाएं ताकि फ्लैश न दिखे */
+    /* Streamlit का पुराना मेनू हटाएँ, लेकिन साइडबार सेक्शन को चालू रखें */
+    [data-testid="stSidebarNav"] { display: none !important; }
+    
+    /* पेज लोड होते समय फ्लैश रोकने के लिए */
     .stApp { opacity: 0; animation: fadeIn 0.3s ease-in forwards; }
     @keyframes fadeIn { to { opacity: 1; } }
     </style>
@@ -101,6 +96,7 @@ st.markdown("""
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
         display: block !important;
+        visibility: visible !important;
     }
     .sidebar-logo-container { text-align: center; margin-bottom: 25px; padding-top: 15px; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 15px; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%); }
     .sidebar-main-logo { max-width: 80%; height: auto; filter: drop-shadow(0px 0px 8px rgba(255,255,255,0.8)); }
@@ -137,5 +133,3 @@ with f_col2:
 with f_col3:
     st.image("https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=500&q=80", use_container_width=True)
     st.markdown("<div class='feature-box'><h3>🔒 Secure</h3></div>", unsafe_allow_html=True)
-
-st.markdown("<br><br><div style='text-align: center; color: #888888;'>Bandhan.com © 2026</div>", unsafe_allow_html=True)
