@@ -1,25 +1,17 @@
 import streamlit as st
 import base64
 
-# --- 1. सबसे ज़रूरी: पुराना नेविगेशन हटाएं, कस्टम साइडबार को चालू रखें ---
+# --- 1. फ्लैश रोकने और नेविगेशन छिपाने के लिए ---
 st.markdown("""
     <style>
-    /* Streamlit का पुराना मेनू हटाएँ, लेकिन साइडबार सेक्शन को चालू रखें */
     [data-testid="stSidebarNav"] { display: none !important; }
-    
-    /* पेज लोड होते समय फ्लैश रोकने के लिए */
     .stApp { opacity: 0; animation: fadeIn 0.3s ease-in forwards; }
     @keyframes fadeIn { to { opacity: 1; } }
     </style>
 """, unsafe_allow_html=True)
 
 # 2. Page Configuration
-st.set_page_config(
-    page_title="Bandhan | Premium Matrimony & Ecosystem",
-    page_icon="💍",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+st.set_page_config(page_title="Bandhan | Home", page_icon="💍", layout="wide", initial_sidebar_state="expanded")
 
 # 3. READ LOCAL LOGO
 def get_base64_image(file_path):
@@ -36,16 +28,12 @@ st.markdown(f"""
     <style>
     .stApp::after {{
         content: ""; 
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 100vh;
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%); 
         background-image: url("data:image/png;base64,{logo_b64}"); 
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 350px; 
+        background-repeat: no-repeat; background-position: center; background-size: 350px; 
         filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.5));
-        z-index: 9999999; 
-        animation: fadeOutSplash 1.2s ease-in-out forwards; 
+        z-index: 9999999; animation: fadeOutSplash 1.2s ease-in-out forwards; 
     }}
     @keyframes fadeOutSplash {{
         0% {{ opacity: 1; visibility: visible; }}
@@ -55,33 +43,33 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 5. CUSTOM SIDEBAR HTML
+# 5. CUSTOM SIDEBAR HTML (target="_top" के साथ ताकि पेज न अटके)
 sidebar_html = f"""
     <div class="sidebar-logo-container">
         <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
     </div>
     <div class="custom-sidebar-menu">
-        <a href="/?page=home" target="_self" class="custom-menu-item">
+        <a href="/" target="_top" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"></div>
             <div class="custom-menu-text">Home</div>
         </a>
-        <a href="/?page=kundli" target="_self" class="custom-menu-item">
+        <a href="Kundli_Match" target="_top" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png"></div>
             <div class="custom-menu-text">Kundli Match</div>
         </a>
-        <a href="/?page=registration" target="_self" class="custom-menu-item">
+        <a href="Registration" target="_top" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png"></div>
             <div class="custom-menu-text">Registration</div>
         </a>
-        <a href="/?page=matchmaking" target="_self" class="custom-menu-item">
+        <a href="Matchmaking" target="_top" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png"></div>
             <div class="custom-menu-text">Matchmaking</div>
         </a>
-        <a href="/?page=services" target="_self" class="custom-menu-item">
+        <a href="Wedding_Services" target="_top" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png"></div>
             <div class="custom-menu-text">Wedding Services</div>
         </a>
-        <a href="/?page=chat" target="_self" class="custom-menu-item">
+        <a href="Chat_Alerts" target="_top" class="custom-menu-item">
             <div class="custom-icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1380/1380370.png"></div>
             <div class="custom-menu-text">Chat & Alerts</div>
         </a>
@@ -111,13 +99,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 7. Content
+# 7. Content (होम पेज का कंटेंट)
 col1, col2 = st.columns([1.2, 1], gap="large")
 with col1:
     st.title("Bandhan.com 💍")
     st.markdown("<p class='tagline'>Traditional Roots, Modern Approach.</p>", unsafe_allow_html=True)
     st.button("Create Your Premium Profile (Free)", type="primary")
-
 with col2:
     st.image("https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80")
 
