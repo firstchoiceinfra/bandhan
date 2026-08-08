@@ -3,3 +3,4 @@ Pillow
 pandas
 pymongo
 dnspython
+streamlit run app.py
