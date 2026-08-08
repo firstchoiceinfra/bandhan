@@ -51,7 +51,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # =====================================================================
-# 4. CUSTOM IMAGE-BASED SIDEBAR MENU (यहीं पर एरर था, जो अब फिक्स है)
+# 4. CUSTOM IMAGE-BASED SIDEBAR MENU
 # =====================================================================
 sidebar_html = f"""
 <div class="app-sidebar-menu">
@@ -102,7 +102,6 @@ sidebar_html = f"""
     </a>
 </div>
 """
-# यह लाइन उस HTML को सही तरीके से Python में रन करती है
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
 # =====================================================================
