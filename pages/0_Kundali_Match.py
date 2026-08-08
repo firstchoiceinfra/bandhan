@@ -2,19 +2,33 @@ import streamlit as st
 import time
 import base64
 
-# --- 1. फ्लैश रोकने और डिफ़ॉल्ट नेविगेशन को छिपाने के लिए सबसे ऊपर CSS ---
+# =====================================================================
+# 1. 🔥 ANTI-FLASH & HIDE DEFAULT NAVIGATION 🔥
+# =====================================================================
 st.markdown("""
     <style>
-    [data-testid="stSidebarNav"], #stSidebarNav { display: none !important; }
-    .stApp { opacity: 0; animation: fadeIn 0.3s ease-in forwards; }
+    /* Streamlit के पुराने डिफ़ॉल्ट नेविगेशन को पूरी तरह छिपाना */
+    [data-testid="stSidebarNav"] { display: none !important; }
+    
+    /* पेज लोड होने तक पूरे ऐप को छिपाएं ताकि सफेद फ्लैश न दिखे */
+    .stApp { opacity: 0; animation: fadeIn 0.4s ease-in forwards; }
     @keyframes fadeIn { to { opacity: 1; } }
     </style>
 """, unsafe_allow_html=True)
 
-# 2. Page Configuration
-st.set_page_config(page_title="Kundali Match | Bandhan", page_icon="🕉️", layout="wide")
+# =====================================================================
+# 2. PAGE CONFIGURATION
+# =====================================================================
+st.set_page_config(
+    page_title="Kundali Match | Bandhan",
+    page_icon="🕉️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# 3. READ LOCAL LOGO (896327.png) AUTOMATICALLY
+# =====================================================================
+# 3. 🔥 DARK PREMIUM SPLASH SCREEN (WITH LOCAL LOGO) 🔥
+# =====================================================================
 def get_base64_image(file_path):
     try:
         with open(file_path, "rb") as f:
@@ -24,7 +38,6 @@ def get_base64_image(file_path):
 
 logo_b64 = get_base64_image("896327.png")
 
-# 4. SPLASH SCREEN (Dark & Matching with Sidebar)
 st.markdown(f"""
     <style>
     .stApp::after {{
@@ -48,109 +61,109 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 5. CUSTOM SIDEBAR HTML (Direct Logo instead of Text)
-sidebar_html = f"""
-    <div class="sidebar-logo-container">
-        <img src="data:image/png;base64,{logo_b64}" alt="Bandhan Logo" class="sidebar-main-logo">
+# =====================================================================
+# 4. 🔥 CUSTOM IMAGE-BASED SIDEBAR MENU (target="_top" के साथ) 🔥
+# =====================================================================
+sidebar_html = """
+<div class="app-sidebar-menu">
+    <!-- Top Custom Title for Sidebar -->
+    <div style="color: #D4AF37; font-size: 1.8rem; font-weight: 900; font-family: 'Georgia', serif; text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;">
+        👑 Bandhan Menu
     </div>
-    <div class="custom-sidebar-menu">
-        <a href="/" target="_self" class="custom-menu-item">
-            <div class="custom-icon-circle">
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">
-            </div>
-            <div class="custom-menu-text">Home</div>
-        </a>
-        <a href="Kundli_Match" target="_self" class="custom-menu-item">
-            <div class="custom-icon-circle">
-                <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli">
-            </div>
-            <div class="custom-menu-text">Kundli Match</div>
-        </a>
-        <a href="Registration" target="_self" class="custom-menu-item">
-            <div class="custom-icon-circle">
-                <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration">
-            </div>
-            <div class="custom-menu-text">Registration</div>
-        </a>
-        <a href="Matchmaking" target="_self" class="custom-menu-item">
-            <div class="custom-icon-circle">
-                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking">
-            </div>
-            <div class="custom-menu-text">Matchmaking</div>
-        </a>
-        <a href="Wedding_Services" target="_self" class="custom-menu-item">
-            <div class="custom-icon-circle">
-                <img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services">
-            </div>
-            <div class="custom-menu-text">Wedding Services</div>
-        </a>
-        <a href="Chat_Alerts" target="_self" class="custom-menu-item">
-            <div class="custom-icon-circle">
-                <img src="https://cdn-icons-png.flaticon.com/512/1380/1380370.png" alt="Chat">
-            </div>
-            <div class="custom-menu-text">Chat & Alerts</div>
-        </a>
-    </div>
+
+    <!-- 0. Home Page -->
+    <a href="/" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Home</div>
+    </a>
+
+    <!-- 1. Kundli Match -->
+    <a href="Kundli_Match" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Kundli Match</div>
+    </a>
+    
+    <!-- 2. Registration -->
+    <a href="Registration" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Registration</div>
+    </a>
+    
+    <!-- 3. Matchmaking -->
+    <a href="Matchmaking" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Matchmaking</div>
+    </a>
+
+    <!-- 4. Wedding Services -->
+    <a href="Wedding_Services" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Wedding Services</div>
+    </a>
+    
+    <!-- 5. Verification KYC -->
+    <a href="Verification_KYC" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Verification KYC</div>
+    </a>
+</div>
 """
+
+# इसे साइडबार में प्रिंट करना
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
-# 6. POWERFUL PREMIUM CSS (Custom Menu + Kundali Design + Logo Glow)
+
+# =====================================================================
+# 5. POWERFUL PREMIUM CSS (Sidebar & Kundli Styling)
+# =====================================================================
 st.markdown("""
     <style>
     /* Main App Background (Off-white for Kundli Page) */
     .stApp { background-color: #FFFDF8 !important; }
     
-    /* Sidebar Background Gradient */
+    /* 1. Sidebar Background Gradient */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
         border-right: 3px solid #D4AF37 !important;
     }
 
-    /* CUSTOM MENU LOGO STYLING */
-    .sidebar-logo-container {
-        text-align: center; 
-        margin-bottom: 25px; 
-        padding-top: 15px;
-        border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
-        padding-bottom: 15px;
-        background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 70%);
+    /* 2. Custom Sidebar Menu CSS */
+    .app-sidebar-menu {
+        display: flex; flex-direction: column; gap: 20px; padding-top: 5px; align-items: center;
     }
+    .menu-item {
+        display: flex; flex-direction: column; align-items: center; text-decoration: none !important;
+        transition: transform 0.2s, background 0.3s; cursor: pointer; width: 90%; padding: 10px;
+        border-radius: 12px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .menu-item:hover {
+        transform: scale(1.05); background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
+        border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    }
+    .menu-item:hover .menu-text { color: #0F2027 !important; font-weight: 900 !important; }
     
-    .sidebar-main-logo {
-        max-width: 80%; 
-        height: auto;
-        object-fit: contain;
-        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.8)); 
+    .icon-circle {
+        width: 65px; height: 65px; background-color: #FFFFFF; border-radius: 50%;
+        display: flex; justify-content: center; align-items: center; margin-bottom: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
-
-    .custom-sidebar-menu { display: flex; flex-direction: column; gap: 12px; }
-
-    .custom-menu-item {
-        display: flex; flex-direction: row; align-items: center; justify-content: flex-start; 
-        background-color: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 10px 15px;
-        border: 1px solid rgba(212, 175, 55, 0.3); text-decoration: none !important;
-        transition: all 0.3s ease-in-out;
+    .icon-circle img { width: 38px; height: 38px; object-fit: contain; }
+    
+    .menu-text {
+        font-size: 0.95rem; font-weight: 700; text-align: center; font-family: 'Helvetica', sans-serif;
+        letter-spacing: 0.5px; transition: color 0.3s;
     }
-
-    .custom-menu-item:hover {
-        background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
-        transform: translateX(8px); border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-    }
-
-    .custom-icon-circle {
-        width: 42px; height: 42px; min-width: 42px; background-color: #FFFFFF; 
-        border-radius: 50%; display: flex; justify-content: center; align-items: center;
-        margin-right: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); overflow: hidden; 
-    }
-
-    .custom-icon-circle img { width: 28px; height: 28px; object-fit: contain; }
-
-    .custom-menu-text {
-        color: #E2E8F0; font-size: 1.05rem; font-weight: 600; font-family: 'Helvetica', sans-serif;
-        text-align: left; line-height: 1.2;
-    }
-
-    .custom-menu-item:hover .custom-menu-text { color: #0F2027; font-weight: 800; }
 
     /* KUNDALI MATCH PAGE SPECIFIC CSS */
     .header-kundali { color: #D35400; font-family: 'Georgia', serif; font-size: 2.8rem; text-align: center; font-weight: bold; }
@@ -159,9 +172,10 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --------------------------------------------------------------------------------
-# 7. PAGE CONTENT (Boy/Girl Details)
-# --------------------------------------------------------------------------------
+
+# =====================================================================
+# 6. PAGE CONTENT (Boy/Girl Details Form)
+# =====================================================================
 
 st.markdown("<h1 class='header-kundali'>🕉️ AI Kundali & Guna Milan</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center; color:gray;'>Our advanced Vedic AI calculates accurate planetary positions and the 36 Gunas for perfect compatibility.</p>", unsafe_allow_html=True)
@@ -184,6 +198,7 @@ with col2:
     g_place = st.text_input("Place of Birth", key="g_place")
 
 st.markdown("<br>", unsafe_allow_html=True)
+
 if st.button("🔮 Calculate 36 Guna Match", type="primary", use_container_width=True):
     if b_name and g_name:
         with st.spinner("Analyzing planetary positions and Ashtakoota Gunas..."):
