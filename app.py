@@ -2,7 +2,7 @@ import streamlit as st
 import base64
 
 # =====================================================================
-# 1. 🔥 ANTI-FLASH & HIDE DEFAULT NAVIGATION (Must be at the very top) 🔥
+# 1. 🔥 ANTI-FLASH & HIDE DEFAULT NAVIGATION (सबसे ऊपर होना चाहिए) 🔥
 # =====================================================================
 st.markdown("""
     <style>
@@ -16,7 +16,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =====================================================================
-# 2. PAGE CONFIGURATION (सिर्फ एक बार इस्तेमाल होगा)
+# 2. PAGE CONFIGURATION
 # =====================================================================
 st.set_page_config(
     page_title="Bandhan | Premium Matrimony & Ecosystem",
@@ -61,12 +61,8 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # =====================================================================
-# 4. 🔥 CUSTOM IMAGE-BASED SIDEBAR MENU (आपका ओरिजिनल HTML) 🔥
+# 4. 🔥 CUSTOM IMAGE-BASED SIDEBAR MENU (target="_top" के साथ) 🔥
 # =====================================================================
-
-# Unread Messages Badge Logic (Your original logic)
-if 'unread_msgs' not in st.session_state:
-    st.session_state.unread_msgs = 2 
 
 sidebar_html = """
 <div class="app-sidebar-menu">
@@ -75,8 +71,16 @@ sidebar_html = """
         👑 Bandhan Menu
     </div>
 
+    <!-- 0. Home Page -->
+    <a href="/" target="_top" class="menu-item">
+        <div class="icon-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">
+        </div>
+        <div class="menu-text" style="color: #E2E8F0;">Home</div>
+    </a>
+
     <!-- 1. Kundli Match -->
-    <a href="Kundli_Match" target="_self" class="menu-item">
+    <a href="Kundli_Match" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli">
         </div>
@@ -84,7 +88,7 @@ sidebar_html = """
     </a>
     
     <!-- 2. Registration -->
-    <a href="Registration" target="_self" class="menu-item">
+    <a href="Registration" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration">
         </div>
@@ -92,7 +96,7 @@ sidebar_html = """
     </a>
     
     <!-- 3. Matchmaking -->
-    <a href="Matchmaking" target="_self" class="menu-item">
+    <a href="Matchmaking" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking">
         </div>
@@ -100,7 +104,7 @@ sidebar_html = """
     </a>
 
     <!-- 4. Wedding Services -->
-    <a href="Wedding_Services" target="_self" class="menu-item">
+    <a href="Wedding_Services" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services">
         </div>
@@ -108,7 +112,7 @@ sidebar_html = """
     </a>
     
     <!-- 5. Verification KYC -->
-    <a href="Verification_KYC" target="_self" class="menu-item">
+    <a href="Verification_KYC" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC">
         </div>
@@ -122,7 +126,7 @@ st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
 
 # =====================================================================
-# 5. POWERFUL PREMIUM CSS (आपका ओरिजिनल CSS)
+# 5. POWERFUL PREMIUM CSS 
 # =====================================================================
 st.markdown("""
     <style>
@@ -224,7 +228,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # =====================================================================
-# 6. APP CONTENT (आपका ओरिजिनल होम पेज)
+# 6. APP CONTENT (आपका होम पेज)
 # =====================================================================
 
 # Hero Section (Top Header & Image)
