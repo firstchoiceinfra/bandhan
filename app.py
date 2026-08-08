@@ -1,9 +1,7 @@
 import streamlit as st
 import base64
 
-# =====================================================================
 # 1. PAGE CONFIGURATION
-# =====================================================================
 st.set_page_config(
     page_title="Bandhan | Premium Matrimony & Ecosystem",
     page_icon="💍",
@@ -11,9 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# =====================================================================
-# 2. READ LOCAL LOGO (नया लोगो)
-# =====================================================================
+# 2. READ LOCAL LOGO
 def get_base64_image(file_path):
     try:
         with open(file_path, "rb") as f:
@@ -21,23 +17,18 @@ def get_base64_image(file_path):
     except Exception as e:
         return ""
 
-# नए लोगो का इस्तेमाल
 main_logo_b64 = get_base64_image("896430.png")
 
-# =====================================================================
-# 3. 🔥 ANTI-FLASH & NEW LOGO SPLASH SCREEN 🔥
-# =====================================================================
+# 3. ANTI-FLASH & NEW LOGO SPLASH SCREEN
 st.markdown(f"""
     <style>
-    /* Streamlit के पुराने डिफ़ॉल्ट नेविगेशन को पूरी तरह छिपाना */
     [data-testid="stSidebarNav"] {{ display: none !important; }}
     
-    /* पेज लोड होने पर सफेद फ्लैश को रोकने के लिए डार्क बैकग्राउंड और नया लोगो */
     .stApp::before {{
         content: ""; 
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: #0F2027; /* डार्क कलर जो सफेद फ्लैश को रोकेगा */
+        background-color: #0F2027; 
         background-image: url("data:image/png;base64,{main_logo_b64}"); 
         background-repeat: no-repeat;
         background-position: center;
@@ -53,17 +44,13 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# =====================================================================
-# 4. 🔥 CUSTOM IMAGE-BASED SIDEBAR MENU (अब नए लोगो के साथ) 🔥
-# =====================================================================
+# 4. CUSTOM IMAGE-BASED SIDEBAR MENU
 sidebar_html = f"""
 <div class="app-sidebar-menu">
-    <!-- Top Custom Logo for Sidebar (टेक्स्ट की जगह नया लोगो) -->
     <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;">
         <img src="data:image/png;base64,{main_logo_b64}" style="max-width: 85%; height: auto; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5));">
     </div>
 
-    <!-- 0. Home Page -->
     <a href="/" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">
@@ -71,7 +58,6 @@ sidebar_html = f"""
         <div class="menu-text" style="color: #E2E8F0;">Home</div>
     </a>
 
-    <!-- 1. Kundli Match -->
     <a href="Kundli_Match" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli">
@@ -79,7 +65,6 @@ sidebar_html = f"""
         <div class="menu-text" style="color: #E2E8F0;">Kundli Match</div>
     </a>
     
-    <!-- 2. Registration -->
     <a href="Registration" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration">
@@ -87,7 +72,6 @@ sidebar_html = f"""
         <div class="menu-text" style="color: #E2E8F0;">Registration</div>
     </a>
     
-    <!-- 3. Matchmaking -->
     <a href="Matchmaking" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking">
@@ -95,7 +79,6 @@ sidebar_html = f"""
         <div class="menu-text" style="color: #E2E8F0;">Matchmaking</div>
     </a>
 
-    <!-- 4. Wedding Services -->
     <a href="Wedding_Services" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services">
@@ -103,7 +86,6 @@ sidebar_html = f"""
         <div class="menu-text" style="color: #E2E8F0;">Wedding Services</div>
     </a>
     
-    <!-- 5. Verification KYC -->
     <a href="Verification_KYC" target="_top" class="menu-item">
         <div class="icon-circle">
             <img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC">
@@ -114,10 +96,7 @@ sidebar_html = f"""
 """
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
-
-# =====================================================================
 # 5. POWERFUL PREMIUM CSS 
-# =====================================================================
 st.markdown("""
     <style>
     .stApp {
@@ -155,9 +134,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# =====================================================================
 # 6. APP CONTENT 
-# =====================================================================
 col1, col2 = st.columns([1.2, 1], gap="large")
 
 with col1:
