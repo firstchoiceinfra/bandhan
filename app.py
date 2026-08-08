@@ -18,153 +18,134 @@ def get_base64_image(file_path):
     try:
         with open(file_path, "rb") as f:
             return base64.b64encode(f.read()).decode()
-    except Exception as e:
+    except Exception:
         return ""
 
 main_logo_b64 = get_base64_image("896430.png")
 
 # =====================================================================
-# 3. ANTI-FLASH & NEW LOGO SPLASH SCREEN
+# 3. ANTI-FLASH & SPLASH SCREEN
+#    (NOTE: single-line f-string -> no leading-space/indentation risk)
 # =====================================================================
-st.markdown(f"""
-    <style>
-    [data-testid="stSidebarNav"] {{ display: none !important; }}
-    
-    .stApp::before {{
-        content: ""; 
-        position: fixed;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: #0F2027; 
-        background-image: url("data:image/png;base64,{main_logo_b64}"); 
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 350px; 
-        z-index: 9999999; 
-        animation: fadeOutSplash 0.8s ease-in-out forwards; 
-    }}
-    @keyframes fadeOutSplash {{
-        0% {{ opacity: 1; visibility: visible; }}
-        60% {{ opacity: 1; visibility: visible; }} 
-        100% {{ opacity: 0; visibility: hidden; pointer-events: none; }} 
-    }}
-    </style>
-""", unsafe_allow_html=True)
+splash_css = (
+    "<style>"
+    "[data-testid=\"stSidebarNav\"] { display: none !important; }"
+    ".stApp::before {"
+    "content: \"\";"
+    "position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;"
+    "background-color: #0F2027;"
+    f"background-image: url('data:image/png;base64,{main_logo_b64}');"
+    "background-repeat: no-repeat; background-position: center; background-size: 350px;"
+    "z-index: 9999999; animation: fadeOutSplash 0.8s ease-in-out forwards;"
+    "}"
+    "@keyframes fadeOutSplash {"
+    "0% { opacity: 1; visibility: visible; }"
+    "60% { opacity: 1; visibility: visible; }"
+    "100% { opacity: 0; visibility: hidden; pointer-events: none; }"
+    "}"
+    "</style>"
+)
+st.markdown(splash_css, unsafe_allow_html=True)
 
 # =====================================================================
-# 4. CUSTOM IMAGE-BASED SIDEBAR MENU (एरर-फ्री और सुरक्षित तरीका)
+# 4. CUSTOM IMAGE-BASED SIDEBAR MENU
+#    (Built with .join() on a list -> guarantees zero leading spaces
+#     on any line, regardless of how this code is indented in your file)
 # =====================================================================
-sidebar_html = f"""
-<div class="app-sidebar-menu">
-    <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;">
-        <img src="data:image/png;base64,{main_logo_b64}" style="max-width: 85%; height: auto; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5));">
-    </div>
+sidebar_parts = [
+    '<div class="app-sidebar-menu">',
+    '<div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;">',
+    f'<img src="data:image/png;base64,{main_logo_b64}" style="max-width: 85%; height: auto; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5));">',
+    '</div>',
 
-    <a href="/" target="_top" class="menu-item">
-        <div class="icon-circle">
-            <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home">
-        </div>
-        <div class="menu-text" style="color: #E2E8F0;">Home</div>
-    </a>
+    '<a href="/" target="_top" class="menu-item">'
+    '<div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" alt="Home"></div>'
+    '<div class="menu-text" style="color: #E2E8F0;">Home</div></a>',
 
-    <a href="Kundli_Match" target="_top" class="menu-item">
-        <div class="icon-circle">
-            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli">
-        </div>
-        <div class="menu-text" style="color: #E2E8F0;">Kundli Match</div>
-    </a>
-    
-    <a href="Registration" target="_top" class="menu-item">
-        <div class="icon-circle">
-            <img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration">
-        </div>
-        <div class="menu-text" style="color: #E2E8F0;">Registration</div>
-    </a>
-    
-    <a href="Matchmaking" target="_top" class="menu-item">
-        <div class="icon-circle">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking">
-        </div>
-        <div class="menu-text" style="color: #E2E8F0;">Matchmaking</div>
-    </a>
+    '<a href="Kundli_Match" target="_top" class="menu-item">'
+    '<div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Kundli"></div>'
+    '<div class="menu-text" style="color: #E2E8F0;">Kundli Match</div></a>',
 
-    <a href="Wedding_Services" target="_top" class="menu-item">
-        <div class="icon-circle">
-            <img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services">
-        </div>
-        <div class="menu-text" style="color: #E2E8F0;">Wedding Services</div>
-    </a>
-    
-    <a href="Verification_KYC" target="_top" class="menu-item">
-        <div class="icon-circle">
-            <img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC">
-        </div>
-        <div class="menu-text" style="color: #E2E8F0;">Verification KYC</div>
-    </a>
-</div>
-"""
+    '<a href="Registration" target="_top" class="menu-item">'
+    '<div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/2921/2921222.png" alt="Registration"></div>'
+    '<div class="menu-text" style="color: #E2E8F0;">Registration</div></a>',
+
+    '<a href="Matchmaking" target="_top" class="menu-item">'
+    '<div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Matchmaking"></div>'
+    '<div class="menu-text" style="color: #E2E8F0;">Matchmaking</div></a>',
+
+    '<a href="Wedding_Services" target="_top" class="menu-item">'
+    '<div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/3159/3159303.png" alt="Services"></div>'
+    '<div class="menu-text" style="color: #E2E8F0;">Wedding Services</div></a>',
+
+    '<a href="Verification_KYC" target="_top" class="menu-item">'
+    '<div class="icon-circle"><img src="https://cdn-icons-png.flaticon.com/512/6928/6928929.png" alt="KYC"></div>'
+    '<div class="menu-text" style="color: #E2E8F0;">Verification KYC</div></a>',
+
+    '</div>',
+]
+sidebar_html = "".join(sidebar_parts)
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
 # =====================================================================
-# 5. POWERFUL PREMIUM CSS 
+# 5. POWERFUL PREMIUM CSS
 # =====================================================================
-st.markdown("""
-    <style>
-    .stApp {
-        background-color: #FAFAFA;
-        font-family: 'Helvetica Neue', sans-serif;
-    }
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;
-        border-right: 3px solid #D4AF37 !important;
-    }
-    .app-sidebar-menu { display: flex; flex-direction: column; gap: 20px; padding-top: 5px; align-items: center; }
-    .menu-item {
-        display: flex; flex-direction: column; align-items: center; text-decoration: none !important;
-        transition: transform 0.2s, background 0.3s; cursor: pointer; width: 90%; padding: 10px;
-        border-radius: 12px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);
-    }
-    .menu-item:hover {
-        transform: scale(1.05); background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);
-        border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-    }
-    .menu-item:hover .menu-text { color: #0F2027 !important; font-weight: 900 !important; }
-    .icon-circle {
-        width: 65px; height: 65px; background-color: #FFFFFF; border-radius: 50%;
-        display: flex; justify-content: center; align-items: center; margin-bottom: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-    .icon-circle img { width: 38px; height: 38px; object-fit: contain; }
-    .menu-text { font-size: 0.95rem; font-weight: 700; text-align: center; font-family: 'Helvetica', sans-serif; letter-spacing: 0.5px; transition: color 0.3s; }
-    h1 { color: #0F2027; font-weight: 700; letter-spacing: 1px; }
-    .feature-box {
-        background-color: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        text-align: center; border-bottom: 4px solid #D4AF37; transition: transform 0.3s ease;
-    }
-    .feature-box:hover { transform: translateY(-5px); }
-    .tagline { font-size: 1.5rem; color: #555555; font-weight: 300; line-height: 1.6; }
-    </style>
-""", unsafe_allow_html=True)
+premium_css = (
+    "<style>"
+    ".stApp { background-color: #FAFAFA; font-family: 'Helvetica Neue', sans-serif; }"
+    "[data-testid=\"stSidebar\"] {"
+    "background: linear-gradient(180deg, #0F2027 0%, #203A43 50%, #2C5364 100%) !important;"
+    "border-right: 3px solid #D4AF37 !important;"
+    "}"
+    ".app-sidebar-menu { display: flex; flex-direction: column; gap: 20px; padding-top: 5px; align-items: center; }"
+    ".menu-item {"
+    "display: flex; flex-direction: column; align-items: center; text-decoration: none !important;"
+    "transition: transform 0.2s, background 0.3s; cursor: pointer; width: 90%; padding: 10px;"
+    "border-radius: 12px; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);"
+    "}"
+    ".menu-item:hover {"
+    "transform: scale(1.05); background: linear-gradient(135deg, #BF953F 0%, #AA771C 100%);"
+    "border-color: #FBF5B7; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);"
+    "}"
+    ".menu-item:hover .menu-text { color: #0F2027 !important; font-weight: 900 !important; }"
+    ".icon-circle {"
+    "width: 65px; height: 65px; background-color: #FFFFFF; border-radius: 50%;"
+    "display: flex; justify-content: center; align-items: center; margin-bottom: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2);"
+    "}"
+    ".icon-circle img { width: 38px; height: 38px; object-fit: contain; }"
+    ".menu-text { font-size: 0.95rem; font-weight: 700; text-align: center; font-family: 'Helvetica', sans-serif; letter-spacing: 0.5px; transition: color 0.3s; }"
+    "h1 { color: #0F2027; font-weight: 700; letter-spacing: 1px; }"
+    ".feature-box {"
+    "background-color: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);"
+    "text-align: center; border-bottom: 4px solid #D4AF37; transition: transform 0.3s ease;"
+    "}"
+    ".feature-box:hover { transform: translateY(-5px); }"
+    ".tagline { font-size: 1.5rem; color: #555555; font-weight: 300; line-height: 1.6; }"
+    "</style>"
+)
+st.markdown(premium_css, unsafe_allow_html=True)
 
 # =====================================================================
-# 6. APP CONTENT 
+# 6. APP CONTENT
 # =====================================================================
 col1, col2 = st.columns([1.2, 1], gap="large")
 
 with col1:
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.title("Bandhan.com 💍")
-    st.markdown("""
-        <p class="tagline">
-        <b>Traditional Roots, Modern Approach.</b><br>
-        The world's first AI-powered matrimonial platform and complete wedding ecosystem. <br>
-        From finding the perfect life partner to wedding venues and honeymoons—everything in one place.
-        </p>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        '<p class="tagline"><b>Traditional Roots, Modern Approach.</b><br>'
+        "The world's first AI-powered matrimonial platform and complete wedding ecosystem. <br>"
+        "From finding the perfect life partner to wedding venues and honeymoons—everything in one place."
+        "</p>",
+        unsafe_allow_html=True,
+    )
     st.button("Create Your Premium Profile (Free)", type="primary", use_container_width=True)
 
 with col2:
     st.image(
-        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80", 
-        caption="The Perfect Match Awaits", 
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80",
+        caption="The Perfect Match Awaits",
         use_container_width=True
     )
 
@@ -183,3 +164,4 @@ with f_col3:
     st.markdown("<div class='feature-box'><h3 style='color:#D4AF37;'>🔒 100% Secure</h3><p>Strict Identity Verification. Your personal information and photos are completely secure, giving you full control over your privacy.</p></div>", unsafe_allow_html=True)
 
 st.markdown("<br><br><div style='text-align: center; color: #888888; padding: 20px;'><p>Bandhan.com © 2026 | Matrimony • Planning • Vendors • Honeymoon</p></div>", unsafe_allow_html=True)
+
