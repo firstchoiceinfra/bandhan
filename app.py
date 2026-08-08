@@ -1,7 +1,9 @@
 import streamlit as st
 import base64
 
+# =====================================================================
 # 1. PAGE CONFIGURATION
+# =====================================================================
 st.set_page_config(
     page_title="Bandhan | Premium Matrimony & Ecosystem",
     page_icon="💍",
@@ -9,7 +11,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# =====================================================================
 # 2. READ LOCAL LOGO
+# =====================================================================
 def get_base64_image(file_path):
     try:
         with open(file_path, "rb") as f:
@@ -19,7 +23,9 @@ def get_base64_image(file_path):
 
 main_logo_b64 = get_base64_image("896430.png")
 
+# =====================================================================
 # 3. ANTI-FLASH & NEW LOGO SPLASH SCREEN
+# =====================================================================
 st.markdown(f"""
     <style>
     [data-testid="stSidebarNav"] {{ display: none !important; }}
@@ -44,7 +50,9 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# 4. CUSTOM IMAGE-BASED SIDEBAR MENU
+# =====================================================================
+# 4. CUSTOM IMAGE-BASED SIDEBAR MENU (यहीं पर एरर था, जो अब फिक्स है)
+# =====================================================================
 sidebar_html = f"""
 <div class="app-sidebar-menu">
     <div style="text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 15px;">
@@ -94,9 +102,12 @@ sidebar_html = f"""
     </a>
 </div>
 """
+# यह लाइन उस HTML को सही तरीके से Python में रन करती है
 st.sidebar.markdown(sidebar_html, unsafe_allow_html=True)
 
+# =====================================================================
 # 5. POWERFUL PREMIUM CSS 
+# =====================================================================
 st.markdown("""
     <style>
     .stApp {
@@ -134,7 +145,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# =====================================================================
 # 6. APP CONTENT 
+# =====================================================================
 col1, col2 = st.columns([1.2, 1], gap="large")
 
 with col1:
